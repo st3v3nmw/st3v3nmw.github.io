@@ -1,1 +1,3 @@
-# st3v3nmw.github.io
+My homepage.
+
+Powered by [Hugo](https://gohugo.io/) and the [Tufte theme](https://github.com/slashformotion/hugo-tufte).
