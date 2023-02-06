@@ -6,6 +6,11 @@ draft: false
 
 ## Obsidian Spaced Repetition
 
-This is a Spaced Repetition plugin for the note-taking tool [Obsidian](https://obsidian.md/).
+This is a spaced repetition plugin for the note-taking tool [Obsidian](https://obsidian.md/).
 It allows one to create and review flashcards and entire notes.
 The project is written is TypeScript and can be viewed [here](https://github.com/st3v3nmw/obsidian-spaced-repetition).
+
+## Impulse
+
+This is a distributed key-value store written in Go.
+The accompanying blog entry on its design can be viewed [here](https://github.com/st3v3nmw/impulse) and the source code is available [here](/posts/impulse).

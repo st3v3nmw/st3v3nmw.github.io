@@ -12,7 +12,7 @@ _casually_ writing some [TypeScript](https://github.com/st3v3nmw/obsidian-spaced
 and learning Go & Site Reliability Engineering.
 Before that, I received a BSc in Computer Science from the University of Nairobi.
 
-I also maintain and contribute to various open-source projects on [GitHub](https://github.com/st3v3nmw/).
+I also maintain and contribute to various open-source projects on [GitHub](https://github.com/st3v3nmw/). For instance, this site's source code can be viewed [here](https://github.com/st3v3nmw/st3v3nmw.github.io).<br/>
 _Occasionally_, I [write at length](/posts) about things I find interesting.
 
 Feel free to contact me on _&#109;&#097;&#105;&#108;&#032;[&#097;&#116;]&#032;&#115;&#116;&#101;&#112;&#104;&#101;&#110;&#109;&#119;&#097;&#110;&#103;&#105;&#032;[&#100;&#111;&#116;]&#032;&#099;&#111;&#109;._
