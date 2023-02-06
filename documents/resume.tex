@@ -1,0 +1,116 @@
+\documentclass{article} 
+
+\usepackage{fontawesome5}
+\usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{ifthen}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{xcolor}
+
+% Page Formatting
+
+\geometry{
+    letterpaper,
+    top=0.75in,
+    right=0.5in,
+    bottom=0.5in,
+    left=0.5in,
+}
+
+\pagestyle{empty}
+
+\definecolor{tuftsblue}{rgb}{0.28, 0.57, 0.81}
+
+% Title Formatting
+
+\titleformat{\section}{\Large\uppercase}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\bfseries\uppercase}{}{0em}{}
+\titleformat{\subsubsection}[runin]{\bfseries}{}{0em}{}
+
+\author{Stephen K. Mwangi}
+
+\newcommand{\experience}[4]{
+    {\textbf{#1}} \hfill {#2} \\
+    \ifthenelse{\equal{#3}{}}{}{
+        {\textbf{\textit{#3}}} \hfill {\textit{#4}} \\
+    }
+    \vspace{0.5em}
+}
+
+% Title
+
+\begin{document}
+
+\begin{center}
+    \textbf{\huge \scshape \theauthor} \\ \vspace{0.5em}
+    \faIcon{at} \href{mailto:mail@stephenmwangi.com}{mail@stephenmwangi.com} $|$
+    \faIcon{github} \href{https://github.com/st3v3nmw}{GitHub} $|$
+    \faIcon{linkedin-in} \href{https://www.linkedin.com/in/stephen-k-mwangi/}{LinkedIn} $|$
+    \faIcon{globe} \href{https://www.stephenmwangi.com/}{Website} 
+\end{center}
+
+% Work Experience
+
+\section{Work Experience}
+\experience
+    {Savannah Informatics Limited}
+    {June 2022 - Present}
+    {Software Engineer}
+    {Nairobi, Kenya}
+    \begin{itemize}\vspace{-2em}
+        \item Develop and design the backend of an Electronic Medical Records and Patient Engagement system called Slade Advantage
+            \textit{(Python, Django, DRF, GCP, Docker)}
+        \item Implemented and designed the company's SMS and USSD API gateway and integrated it with a major Kenyan telecommunications provider, reducing comms costs by $\approx$40\%
+            \textit{(Python, Django, DRF, GCP, RabbitMQ, Redis)}
+        \item Participate in client engagement and UX discovery
+        \item Guide and coach new hires and interns
+    \end{itemize}
+\experience
+    {Savannah Informatics Limited}
+    {June 2021 - May 2022}
+    {Software Engineer Intern}
+    {Nairobi, Kenya}
+    \begin{itemize}\vspace{-2em}
+        \item Maintained and developed the Slade360 Electronic Data Interchange system
+            \textit{(Python, Django, DRF)}
+        \item Provided Level 2 and Level 3 technical support
+    \end{itemize}
+
+% Education
+
+\section{Education}
+\experience
+    {University of Nairobi}
+    {September 2018 - September 2022}
+    {BSc. Computer Science}
+    {First Class Honours}
+    \textbf{Relevant coursework:} Software Engineering, Distributed Systems, Data Structures and Algorithms,
+    Design Thinking, Systems Analysis and Design, Artificial Intelligence, Machine Learning, Compiler Construction
+
+% Projects
+
+\section{Projects}
+\experience
+    {\href{https://github.com/st3v3nmw/obsidian-spaced-repetition}{\textcolor{tuftsblue}{Obsidian Spaced Repetition}}}
+    {April 2021 - Present}{}{}
+    Spaced Repetition plugin for Obsidian.md written in TypeScript.
+    It's been downloaded over 250,000 times and translated into 8+ languages by a global
+    community of users.
+    \vspace{0.75em}
+    \newline
+\experience
+    {\href{https://github.com/st3v3nmw/elixir-backend}{\textcolor{tuftsblue}{Elixir}}}
+    {December 2021 - May 2022}{}{}
+    Elixir is a distributed electronic health records system written in Python/Django and JavaScript/Svelte.
+
+% Skills
+
+\section{Skills}
+\subsection{Programming}
+    Python (Django, Django Rest Framework, Celery), SQL, TypeScript, JavaScript
+\subsection{Technologies}
+    GCP, Docker, PostgreSQL, Redis, RabbitMQ, Ansible
+
+\end{document}
