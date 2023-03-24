@@ -2,3 +2,8 @@
 public/
 
 .vscode/
+
+resume.aux
+resume.log
+resume.out
+out.pdf

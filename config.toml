@@ -39,7 +39,7 @@ rssLimit = 20
   pre = "<i class='fas fa-briefcase fa-lg'></i> "
   weight = -80
   identifier = "cv"
-  url = "/cv"
+  url = "/resume.pdf"
 
 [[menu.footer]]
   pre = "<i class='fas fa-at fa-lg'></i> "
@@ -50,7 +50,7 @@ rssLimit = 20
   pre = "<i class='fab fa-linkedin fa-lg'></i> "
   weight = -110
   identifier = "linkedin"
-  url = "https://www.linkedin.com/in/stephen-mwangi-02a936172/"
+  url = "https://www.linkedin.com/in/stephen-k-mwangi/"
 [[menu.footer]]
   pre = "<i class='fas fa-rss fa-lg'></i> "
   weight = -90
