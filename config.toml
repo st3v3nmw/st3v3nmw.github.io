@@ -13,7 +13,7 @@ rssLimit = 20
     subtitle = "Software Developer"
     copyrightHolder = "Stephen Mwangi"
     showPoweredBy = true
-
+    description = "Stephen Mwangi is a software developer and computer scientist based in Nairobi, Kenya."
     github = "st3v3nmw"
 
 [[menu.nav]]
