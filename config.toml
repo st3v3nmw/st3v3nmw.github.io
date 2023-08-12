@@ -33,7 +33,7 @@ rssLimit = 20
   pre = "<i class='fas fa-microphone fa-lg'></i> "
   weight = -90
   identifier = "talks"
-  url = "/talks"
+  url = "/presentations"
 [[menu.nav]]
   name = "Projects"
   pre = "<i class='fas fa-rocket fa-lg'></i> "
