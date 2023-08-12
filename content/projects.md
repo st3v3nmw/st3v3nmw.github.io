@@ -6,9 +6,8 @@ draft: false
 
 ## Obsidian Spaced Repetition
 
-This is a spaced repetition plugin for the note-taking tool [Obsidian](https://obsidian.md/).
-It allows one to create and review flashcards and entire notes.
-The project is written is TypeScript and can be viewed [here](https://github.com/st3v3nmw/obsidian-spaced-repetition).
+[This](https://github.com/st3v3nmw/obsidian-spaced-repetition) is a spaced repetition plugin for the note-taking tool [Obsidian](https://obsidian.md/).
+It allows one to create and review flashcards and entire notes. The project is written is TypeScript and its documentation can be viewed [here](/obsidian-spaced-repetition/).
 
 ## Impulse
 
