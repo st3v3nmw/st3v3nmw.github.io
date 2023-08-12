@@ -10,34 +10,40 @@ rssLimit = 20
 	name = "Stephen Mwangi"
 
 [params]
-    subtitle = "Software Developer"
+    subtitle = "Software Engineer & Computer Scientist"
     copyrightHolder = "Stephen Mwangi"
     showPoweredBy = true
-    description = "Stephen Mwangi is a software developer and computer scientist based in Nairobi, Kenya."
+    description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya."
     github = "st3v3nmw"
 
 [[menu.nav]]
   name = "About"
-  pre = "<i class='fas fa-user-circle la-lg'></i> "
+  pre = "<i class='fas fa-paperclip la-lg'></i> "
   weight = -110
   identifier = "about"
   url = "/"
 [[menu.nav]]
-  name = "Projects"
-  pre = "<i class='fas fa-laptop-code fa-lg'></i> "
+  name = "Blog"
+  pre = "<i class='fas fa-rss fa-lg'></i> "
+  weight = -100
+  identifier = "blog"
+  url = "/blog"
+[[menu.nav]]
+  name = "Talks"
+  pre = "<i class='fas fa-microphone fa-lg'></i> "
   weight = -90
+  identifier = "talks"
+  url = "/talks"
+[[menu.nav]]
+  name = "Projects"
+  pre = "<i class='fas fa-rocket fa-lg'></i> "
+  weight = -80
   identifier = "projects"
   url = "/projects"
 [[menu.nav]]
-  name = "Random Musings"
-  pre = "<i class='fas fa-rss fa-lg'></i> "
-  weight = -100
-  identifier = "posts"
-  url = "/posts"
-[[menu.nav]]
   name = "Resumé"
   pre = "<i class='fas fa-briefcase fa-lg'></i> "
-  weight = -80
+  weight = -70
   identifier = "cv"
   url = "/resume.pdf"
 
