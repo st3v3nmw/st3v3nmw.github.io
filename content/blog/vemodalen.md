@@ -13,7 +13,7 @@ I recently came across the word _vemödalen_ {{< marginnote >}} Pronounced "vey-
 
 {{< epigraph pre="Walt Whitman, " cite="O Me! O Life!" >}}
 Answer:<br/>
-That you are here—that life exists and identity, <br/>
+That you are here—that life exists and identity,<br/>
 That the powerful play goes on, and you may contribute a verse.
 {{< /epigraph >}}
 
