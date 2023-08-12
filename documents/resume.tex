@@ -13,9 +13,9 @@
 
 \geometry{
     letterpaper,
-    top=0.25in,
+    top=0.5in,
     right=0.5in,
-    bottom=0.25in,
+    bottom=0.5in,
     left=0.5in,
 }
 
@@ -48,9 +48,9 @@
 \begin{center}
     \textbf{\huge \scshape \theauthor} \\ \vspace{0.5em}
     \faIcon{at} \href{mailto:mail@stephenmwangi.com}{mail@stephenmwangi.com} $|$
-    \faIcon{github} \href{https://github.com/st3v3nmw}{GitHub} $|$
-    \faIcon{linkedin-in} \href{https://www.linkedin.com/in/stephen-k-mwangi/}{LinkedIn} $|$
-    \faIcon{globe} \href{https://www.stephenmwangi.com/}{Website} $|$
+    \faIcon{github} \href{https://github.com/st3v3nmw}{\textcolor{tuftsblue}{\underline{@st3v3nmw}}} $|$
+    \faIcon{linkedin-in} \href{https://www.linkedin.com/in/stephen-k-mwangi/}{\textcolor{tuftsblue}{\underline{in/stephen-k-mwangi}}} $|$
+    \faIcon{globe} \href{https://www.stephenmwangi.com/}{\textcolor{tuftsblue}{\underline{stephenmwangi.com}}} $|$
     \faIcon{map-marker} Nairobi, Kenya
 \end{center}
 
@@ -63,11 +63,13 @@
     {Software Engineer}
     {Nairobi, Kenya}
     \begin{itemize}\vspace{-1em}
-        \item Develop and design the backend of an Electronic Medical Records and Patient Engagement system called Slade Advantage
+        \item Led the design and development of the backend of an Electronic Medical Records and Patient Engagement system
             \textit{(Python, Django, Django Rest Framework, Kubernetes, GCP, Docker, RabbitMQ, Redis, Go, GraphQL)}
         \item Implemented and designed the company's SMS and USSD API gateway and integrated it with a major Kenyan telecommunications provider, reducing comms costs by $\approx$40\%
-            \textit{(Python, Django, Django Rest Framework, GCP, RabbitMQ, Redis)}
+            \textit{(Python, Django, Django Rest Framework, GCP, RabbitMQ, Redis, Swagger)}
         \item Participated in re-platforming existing backend infrastructure from Google Cloud Run to use Google Kubernetes Engine which reduced the company's infrastructure cost by $\approx$55\%
+        \item Optimized existing APIs through application-level caching and query optimization which reduced p95 latency by $\approx$80\% \href{https://www.stephenmwangi.com/talks/django-perf-and-you/}{\textcolor{tuftsblue}{\underline{(Talk given on Django performance)}}}
+        \item Setup monitoring to collect metrics and logs using Telegraf, InfluxDB, and Grafana for analysis
         \item Participated in client engagement and UX discovery
         \item Guided and coached new hires and interns
     \end{itemize}
@@ -97,15 +99,21 @@
 
 \section{Open Source Projects}
 \experience
-    {\href{https://github.com/st3v3nmw/obsidian-spaced-repetition}{\textcolor{tuftsblue}{Obsidian Spaced Repetition}}}
+    {Obsidian Spaced Repetition \href{https://github.com/st3v3nmw/obsidian-spaced-repetition}{\textcolor{tuftsblue}{\underline{(link)}}}}
     {April 2021 - Present}{}{}
-    Spaced Repetition plugin written in TypeScript for the note-taking tool {\href{https://obsidian.md/}{\textcolor{tuftsblue}{Obsidian}}}.
+    Spaced Repetition plugin written in TypeScript for the note-taking tool {\href{https://obsidian.md/}{\textcolor{tuftsblue}{\underline{Obsidian}}}}.
     It has been downloaded over 300,000 times and translated into 10+ languages by a global
     community of users.
     \vspace{0.75em}
     \newline
 \experience
-    {\href{https://github.com/st3v3nmw/elixir-backend}{\textcolor{tuftsblue}{Elixir}}}
+    {Impulse \href{https://github.com/st3v3nmw/impulse}{\textcolor{tuftsblue}{\underline{(link)}}}}
+    {December 2022 - Present}{}{}
+    Impulse is a distributed key-value store written in Go.
+    \vspace{0.75em}
+    \newline
+\experience
+    {Elixir \href{https://github.com/st3v3nmw/elixir-backend}{\textcolor{tuftsblue}{\underline{(link)}}}}
     {December 2021 - May 2022}{}{}
     Elixir is a distributed electronic health records system written in Python/Django and JavaScript/Svelte.
 
@@ -113,15 +121,15 @@
 
 \section{Skills}
 
-\subsection{Programming}
-    Python (Django, Django Rest Framework, Celery), Go, GraphQL, SQL, TypeScript, JavaScript, HTML/CSS, Rust
-\subsection{Infrastructure}
-    Kubernetes, GCP, Docker, PostgreSQL, Redis, RabbitMQ
-\subsection{Observability}
-    Grafana, Telegraf, InfluxDB
-\subsection{CI/CD}
-    Gitlab CI/CD, GitHub Workflows, Helm, Ansible
-\subsection{Collaboration}
-    Git, Jira, Confluence
+\textbf{Programming:}~ Python (Django, DRF, Celery), Go, GraphQL, SQL, TypeScript, JavaScript, HTML/CSS, Rust
+\vspace{0.5em}
+
+\textbf{Infrastructure:} Kubernetes, Google Cloud Platform, Docker, PostgreSQL, Redis, RabbitMQ
+\vspace{0.5em}
+
+\textbf{Observability:}~ Grafana, Telegraf, InfluxDB
+\vspace{0.5em}
+
+\textbf{CI/CD:}~~~~~~~~~~ Gitlab CI/CD, GitHub Workflows, Helm, Ansible
 
 \end{document}
