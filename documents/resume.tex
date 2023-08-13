@@ -12,7 +12,7 @@
 % Page Formatting
 
 \geometry{
-    letterpaper,
+    a4paper,
     top=0.5in,
     right=0.5in,
     bottom=0.5in,
@@ -69,7 +69,7 @@
             \textit{(Python, Django, Django Rest Framework, GCP, RabbitMQ, Redis, Swagger)}
         \item Participated in re-platforming existing backend infrastructure from Google Cloud Run to use Google Kubernetes Engine which reduced the company's infrastructure cost by $\approx$55\%
         \item Optimized existing APIs through application-level caching and query optimization which reduced p95 latency by $\approx$80\% \href{https://www.stephenmwangi.com/talks/django-perf-and-you/}{\textcolor{tuftsblue}{\underline{(Talk given on Django performance)}}}
-        \item Setup monitoring to collect metrics and logs using Telegraf, InfluxDB, and Grafana for analysis
+        \item Setup monitoring to collect metrics and logs using Telegraf, InfluxDB, Grafana, and Sentry for analysis
         \item Participated in client engagement and UX discovery
         \item Guided and coached new hires and interns
     \end{itemize}
@@ -80,7 +80,8 @@
     {Nairobi, Kenya}
     \begin{itemize}\vspace{-1em}
         \item Maintained and developed the Slade360 Electronic Data Interchange system
-            \textit{(Python, Django, DRF)}
+            \textit{(Python, Django, Django Rest Framework)}
+        \item Wrote unit, integration, and end-to-end tests
         \item Provided Level 2 and Level 3 technical support
     \end{itemize}
 
@@ -110,6 +111,7 @@
     {Impulse \href{https://github.com/st3v3nmw/impulse}{\textcolor{tuftsblue}{\underline{(link)}}}}
     {December 2022 - Present}{}{}
     Impulse is a distributed key-value store written in Go.
+    It implements various storage engines (Hash Maps, LevelDB, LSM Trees, B Trees), replication, range queries, chaos testing, and data sharding.
     \vspace{0.75em}
     \newline
 \experience
@@ -127,7 +129,7 @@
 \textbf{Infrastructure:} Kubernetes, Google Cloud Platform, Docker, PostgreSQL, Redis, RabbitMQ
 \vspace{0.5em}
 
-\textbf{Observability:}~ Grafana, Telegraf, InfluxDB
+\textbf{Observability:}~ Grafana, Telegraf, InfluxDB, Sentry
 \vspace{0.5em}
 
 \textbf{CI/CD:}~~~~~~~~~~ Gitlab CI/CD, GitHub Workflows, Helm, Ansible
