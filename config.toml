@@ -48,20 +48,30 @@ rssLimit = 20
   url = "/resume.pdf"
 
 [[menu.footer]]
-  pre = "<i class='fas fa-at fa-lg'></i> "
-  weight = -100
-  identifier = "email"
-  url = "mailto:mail@stephenmwangi.com"
-[[menu.footer]]
   pre = "<i class='fab fa-linkedin fa-lg'></i> "
-  weight = -110
+  weight = -100
   identifier = "linkedin"
   url = "https://www.linkedin.com/in/stephen-k-mwangi/"
 [[menu.footer]]
-  pre = "<i class='fas fa-rss fa-lg'></i> "
+  pre = "<i class='fas fa-at fa-lg'></i> "
   weight = -90
+  identifier = "email"
+  url = "mailto:mail@stephenmwangi.com"
+[[menu.footer]]
+  pre = "<i class='fab fa-twitter fa-lg'></i> "
+  weight = -80
+  identifier = "twitter"
+  url = "https://twitter.com/deader_dodo"
+[[menu.footer]]
+  pre = "<i class='fas fa-rss fa-lg'></i> "
+  weight = -70
   identifier = "rss"
   url = "/index.xml"
+[[menu.footer]]
+  pre = "<i class='fab fa-instagram fa-lg'></i> "
+  weight = -60
+  identifier = "instagram"
+  url = "https://instagram.com/deader_dodo"
 
 # Don't change the settings below
 [markup]
