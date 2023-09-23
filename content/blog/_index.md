@@ -1,3 +1,3 @@
 ---
-title: Random Musings
+title: Blog
 ---

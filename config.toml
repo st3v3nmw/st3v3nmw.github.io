@@ -16,6 +16,9 @@ rssLimit = 20
     description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya."
     github = "st3v3nmw"
 
+[taxonomies]
+  tag = "tags"
+
 [[menu.nav]]
   name = "About"
   pre = "<i class='fas fa-paperclip la-lg'></i> "
