@@ -3,6 +3,8 @@ title: "Vemödalen"
 date: 2023-05-16T20:39:58+03:00
 draft: false
 type: post
+tags:
+    - random
 ---
 
 {{< epigraph pre="John Koenig, " cite="The Dictionary of Obscure Sorrows" >}}
