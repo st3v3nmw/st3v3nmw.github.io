@@ -7,9 +7,8 @@ It's powered by [Hugo](https://gohugo.io/) and the [Tufte theme](https://github.
 Instructions are specific to Fedora.
 
 ```bash
-sudo dnf install texlive-pdftex
-sudo dnf install texlive-fontawesome
-sudo dnf install texlive-titling
-sudo dnf install texlive-collection-fontsrecommended
+sudo apt install texlive-latex-base
+sudo apt install texlive-fonts-recommended
+sudo apt install texlive-fonts-extra
 make resume
 ```
