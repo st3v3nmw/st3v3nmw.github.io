@@ -4,7 +4,7 @@ It's powered by [Hugo](https://gohugo.io/) and the [Tufte theme](https://github.
 
 #### pdflatex
 
-Instructions are specific to Fedora.
+Instructions are specific to Ubuntu.
 
 ```bash
 sudo apt install texlive-latex-base
