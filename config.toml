@@ -21,7 +21,7 @@ rssLimit = 20
 
 [[menu.nav]]
   name = "About"
-  pre = "<i class='fas fa-paperclip la-lg'></i> "
+  pre = "<i class='fas fa-seedling la-lg'></i> "
   weight = -110
   identifier = "about"
   url = "/"
@@ -33,7 +33,7 @@ rssLimit = 20
   url = "/blog"
 [[menu.nav]]
   name = "Talks"
-  pre = "<i class='fas fa-microphone fa-lg'></i> "
+  pre = "<i class='fas fa-microphone-lines fa-lg'></i> "
   weight = -90
   identifier = "talks"
   url = "/presentations"
@@ -50,6 +50,11 @@ rssLimit = 20
   identifier = "cv"
   url = "/resume.pdf"
 
+[[menu.footer]]
+  pre = "<i class='fab fa-bluesky fa-lg'></i> "
+  weight = -100
+  identifier = "bluesky"
+  url = "https://bsky.app/profile/stephenmwangi.com"
 [[menu.footer]]
   pre = "<i class='fab fa-linkedin fa-lg'></i> "
   weight = -100
