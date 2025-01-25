@@ -1,7 +1,6 @@
 ---
 title: "Projects"
 date: 2023-01-02T19:46:08+03:00
-draft: false
 ---
 
 ## Obsidian Spaced Repetition
