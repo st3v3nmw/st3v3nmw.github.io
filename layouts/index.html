@@ -4,19 +4,19 @@
     {{ partial "brand.html" . }}
 
     {{ with .Site.GetPage "/about.md" }}
-        {{ .Content }}
+      {{ .Content }}
     {{ end }}
 
-    <h2>Latest Articles</h2>
-    {{ range where .Site.RegularPages "Type" "post" }}
-        <p>
-          {{ .PublishDate | time.Format ":date_medium" }} &middot;
-          {{ if .IsNode }}
-            <a href="{{ .Permalink }}">{{ .Title}}</a>
-          {{ else }}
-            <a href="{{ .RelPermalink }}">{{ .Title }}{{ if .Draft }} :: Draft {{end}}</a>
-          {{ end }}
-        </p>
+    <h2>Latest Posts</h2>
+    {{ range first 5 (where .Site.RegularPages "Type" "post") }}
+      <p>
+        {{ .PublishDate | time.Format ":date_medium" }} &middot;
+        {{ if .IsNode }}
+          <a href="{{ .Permalink }}">{{ .Title}}</a>
+        {{ else }}
+          <a href="{{ .RelPermalink }}">{{ .Title }}{{ if .Draft }} :: Draft {{end}}</a>
+        {{ end }}
+      </p>
     {{ end  }}
 
     {{ partial "footer.html" . }}

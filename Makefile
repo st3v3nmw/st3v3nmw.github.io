@@ -5,9 +5,17 @@ install:
 
 .PHONY: serve
 serve:
-	hugo server --disableFastRender
+	hugo server -D
+
+.PHONY: post
+post:
+	hugo new content/blog/$(filter-out $@,$(MAKECMDGOALS)).md
 
 .PHONY: resume
 resume:
 	pdflatex documents/resume.tex
 	mv resume.pdf static/
+	rm resume.aux resume.log resume.out
+
+%:
+	@:
