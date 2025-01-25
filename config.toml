@@ -4,10 +4,10 @@ title = "Stephen Mwangi"
 theme = "hugo-tuftesque"
 math = true
 katex = true
-rssLimit = 20
+rssLimit = 10
 
 [author]
-	name = "Stephen Mwangi"
+  name = "Stephen Mwangi"
 
 [params]
   copyrightHolder = "Stephen Mwangi"

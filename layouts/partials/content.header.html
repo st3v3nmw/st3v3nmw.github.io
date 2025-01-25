@@ -1,10 +1,10 @@
 <section>
   <h1 class="content-title">
     {{ if .IsNode }}
-      <a href="{{ .Permalink }}">{{ .Title}}</a>
+      <a href="{{ .Permalink }}">{{ replace .Title "-" " " }}</a>
     {{ else }}
       <a href="{{ .RelPermalink }}">
-        {{ .Title }}{{ if .Draft }} :: Draft {{end}}
+        {{ .Title }}{{ if .Draft }} :: Draft {{ end }}
       </a>
     {{ end }}
   </h1>
@@ -16,49 +16,35 @@
 
     {{ if or (eq .Type "post") (.Params.meta) }}
       <span class="content-meta">
-        {{ if .Params.author }}
-          <i class="fa fa-user">&nbsp;</i>
-          <span class="author">&nbsp;{{ .Params.author }}</span> <br>
-        {{ end }}
+        <i class="fa fa-calendar"></i>
+        &nbsp;{{ .Date.Format "Jan 2, 2006" }}
 
-        {{ if not .Params.hidedate }}
-          <i class="fa fa-calendar"></i>
-          &nbsp;{{ .Date.Format "Jan 2, 2006" }}
-        {{ end }}
-
-        {{ if not .Params.hidereadtime }}
-          &nbsp;<i class="fa fa-clock-o"></i>
-          &nbsp;{{ .ReadingTime }} min read
-        {{ end }}
+        &nbsp;<i class="fa fa-clock"></i>
+        &nbsp;{{ .ReadingTime }} min read
 
         {{ if .Params.tags }}
           <br><br>
-          <i class='fas fa-tag la-lg'></i>&nbsp;&middot;
+          <i class='fa fa-tags la-lg'></i>&nbsp;&middot;
           {{ range $tag := .Params.tags }}
             {{ with $.Site.GetPage (printf "/tags/%s" $tag) }}
-              <a href={{ .RelPermalink }} title="{{$tag}}"> {{$tag}}</a> &middot;
+              <a href={{ .RelPermalink }} title="{{ $tag }}"> {{$tag}}</a> &middot;
             {{ end }}
           {{ end }}
         {{ end }}
 
-        {{ if .Params.categories }}
-          <br>
-          <i class="fa fa-tags"> </i>
-          {{ range .Params.categories }}
-            <a href="{{ " /categories/" | absURL }}{{ . | urlize }}">{{ . }}</a>
-          {{ end }}
-        {{ end }}
       </span>
     {{ end }}
 
   {{ else if (eq .Title "Blog") }}
-    &middot;&nbsp;
-    {{ range first 5 .Site.Taxonomies.tags.ByCount }}{{ $cnt := .Count }}
-      {{ with $.Site.GetPage (printf "/tags/%s" .Name) }}
-        <a href={{ .RelPermalink }} title="{{ .Name }}">
-          <i class='fas fa-tag'></i> {{ .Name }} ({{ $cnt }}) &nbsp;&middot;&nbsp;
-        </a>
+    <span class="content-meta">
+      &middot;&nbsp;
+      {{ range first 5 .Site.Taxonomies.tags.ByCount }}{{ $cnt := .Count }}
+        {{ with $.Site.GetPage (printf "/tags/%s" .Name) }}
+          <a href={{ .RelPermalink }} title="{{ .Name }}">
+            <i class='fas fa-tag'></i> {{ .Name }} ({{ $cnt }})
+          </a> &nbsp;&middot;&nbsp;
+        {{ end }}
       {{ end }}
-    {{ end }}
+    </span>
   {{ end }}
 </section>
