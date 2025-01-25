@@ -1,3 +1,3 @@
-My homepage.
+My [personal website](https://www.stephenmwangi.com/).
 
-It's powered by [Hugo](https://gohugo.io/) and the [Tufte theme](https://github.com/st3v3nmw/hugo-tufte).
+It's powered by [Hugo](https://gohugo.io/) and the [Tuftesque theme](https://github.com/st3v3nmw/hugo-tuftesque).

@@ -1,7 +1,7 @@
 baseURL = "https://www.stephenmwangi.com/"
 languageCode = "en-us"
 title = "Stephen Mwangi"
-theme = "hugo-tufte"
+theme = "hugo-tuftesque"
 math = true
 katex = true
 rssLimit = 20
@@ -10,11 +10,13 @@ rssLimit = 20
 	name = "Stephen Mwangi"
 
 [params]
-    subtitle = "Software Engineer & Computer Scientist"
-    copyrightHolder = "Stephen Mwangi"
-    showPoweredBy = true
-    description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya."
-    github = "st3v3nmw"
+  copyrightHolder = "Stephen Mwangi"
+  showPoweredBy = true
+  description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya."
+  license = "CC BY 4.0"
+  github = "st3v3nmw"
+  bluesky = "stephenmwangi.com"
+  linkedin = "stephen-k-mwangi"
 
 [taxonomies]
   tag = "tags"
@@ -22,52 +24,42 @@ rssLimit = 20
 [[menu.nav]]
   name = "About"
   pre = "<i class='fas fa-seedling la-lg'></i> "
-  weight = -110
+  weight = 1
   identifier = "about"
   url = "/"
 [[menu.nav]]
   name = "Blog"
   pre = "<i class='fas fa-rss fa-lg'></i> "
-  weight = -100
+  weight = 2
   identifier = "blog"
   url = "/blog"
 [[menu.nav]]
   name = "Talks"
   pre = "<i class='fas fa-microphone-lines fa-lg'></i> "
-  weight = -90
+  weight = 3
   identifier = "talks"
-  url = "/presentations"
+  url = "/talks"
 [[menu.nav]]
   name = "Projects"
   pre = "<i class='fas fa-rocket fa-lg'></i> "
-  weight = -80
+  weight = 4
   identifier = "projects"
   url = "/projects"
 [[menu.nav]]
   name = "Resumé"
   pre = "<i class='fas fa-briefcase fa-lg'></i> "
-  weight = -70
+  weight = 5
   identifier = "cv"
   url = "/resume.pdf"
 
 [[menu.footer]]
-  pre = "<i class='fab fa-bluesky fa-lg'></i> "
-  weight = -100
-  identifier = "bluesky"
-  url = "https://bsky.app/profile/stephenmwangi.com"
-[[menu.footer]]
-  pre = "<i class='fab fa-linkedin fa-lg'></i> "
-  weight = -100
-  identifier = "linkedin"
-  url = "https://www.linkedin.com/in/stephen-k-mwangi/"
-[[menu.footer]]
   pre = "<i class='fas fa-at fa-lg'></i> "
-  weight = -90
+  weight = 1
   identifier = "email"
   url = "mailto:mail@stephenmwangi.com"
 [[menu.footer]]
   pre = "<i class='fas fa-rss fa-lg'></i> "
-  weight = -80
+  weight = 2
   identifier = "rss"
   url = "/index.xml"
 
