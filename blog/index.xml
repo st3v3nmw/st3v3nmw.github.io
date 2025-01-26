@@ -1,7 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Stephen Mwangi</title><link>https://www.stephenmwangi.com/blog/</link><description>Recent content in Blog on Stephen Mwangi</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 16 May 2023 20:39:58 +0300</lastBuildDate><atom:link href="https://www.stephenmwangi.com/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Vemödalen</title><link>https://www.stephenmwangi.com/blog/vemodalen/</link><pubDate>Tue, 16 May 2023 20:39:58 +0300</pubDate><guid>https://www.stephenmwangi.com/blog/vemodalen/</guid><description>&lt;div class="epigraph">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Stephen Mwangi</title><link>https://www.stephenmwangi.com/blog/</link><description>Recent content in Blog on Stephen Mwangi</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 25 Jan 2025 15:45:13 +0300</lastBuildDate><atom:link href="https://www.stephenmwangi.com/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>In Memory Key-Value Store</title><link>https://www.stephenmwangi.com/blog/in-memory-key-value-store/</link><pubDate>Sat, 25 Jan 2025 15:45:13 +0300</pubDate><guid>https://www.stephenmwangi.com/blog/in-memory-key-value-store/</guid><description>&lt;div align="center" class="image-container">
+ &lt;img src="https://www.stephenmwangi.com/images/illustrations/woman-gardening.png" alt="Woman gardening illustration"/>
+&lt;/div>
+&lt;div class="epigraph">
 &lt;blockquote>
 
-&lt;p>vemödalen (n.) the frustration of photographing something amazing when thousands of identical photos already exist—the same sunset, the same waterfall, the same curve of a hip, the same closeup of an eye—which can turn a unique subject into something hollow and pulpy and cheap, like a mass-produced piece of furniture you happen to have assembled yourself.&lt;/p>
+&lt;p>What I cannot create, I do not understand. Know how to solve every problem that has been solved.&lt;/p>
+
+&lt;footer>
+Richard Feynman
+
+
+&lt;/a>
+
+&lt;/footer>
+
+&lt;blockquote>
+&lt;/div>
+
+&lt;p>In this blog series, we will build a distributed key-value store from scratch in Go. We&amp;rsquo;ll cover topics such as replication, consensus, consistency, and sharding.
+While I&amp;rsquo;m no expert in distributed systems, I&amp;rsquo;m learning as I go - so if anything looks egregiously wrong (hopefully not enough to irreparably damage my self-esteem 😅), just shoot me an email or start a &lt;a href="https://github.com/st3v3nmw/st3v3nmw.github.io/discussions">new discussion&lt;/a>.&lt;/p></description></item><item><title>Vemödalen</title><link>https://www.stephenmwangi.com/blog/vemodalen/</link><pubDate>Tue, 16 May 2023 20:39:58 +0300</pubDate><guid>https://www.stephenmwangi.com/blog/vemodalen/</guid><description>&lt;div class="epigraph">
+&lt;blockquote>
+
+&lt;p>&lt;b>vemödalen (n.)&lt;/b> The frustration of photographing something amazing when thousands of identical photos already exist—the same sunset, the same waterfall, the same curve of a hip, the same closeup of an eye—which can turn a unique subject into something hollow and pulpy and cheap, like a mass-produced piece of furniture you happen to have assembled yourself.&lt;/p>
 
 &lt;footer>
 John Koenig, 

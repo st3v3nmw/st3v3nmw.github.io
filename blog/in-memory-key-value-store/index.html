@@ -1,0 +1,263 @@
+<!doctype html><html lang=en-us><head><title>In Memory Key-Value Store - Stephen Mwangi</title>
+<meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=description content="
+  
+
+
+
+
+What I cannot create, I do not understand. Know how to solve every problem that has been solved.
+
+
+Richard Feynman
+
+
+
+
+
+
+
+
+
+In this blog series, we will build a distributed key-value store from scratch in Go. We&rsquo;ll cover topics such as replication, consensus, consistency, and sharding.
+While I&rsquo;m no expert in distributed systems, I&rsquo;m learning as I go - so if anything looks egregiously wrong (hopefully not enough to irreparably damage my self-esteem 😅), just shoot me an email or start a new discussion. "><link rel=canonical href=https://www.stephenmwangi.com/blog/in-memory-key-value-store/><link rel=icon type=image/x-icon href=/favicon/favicon.ico><script src=https://cdnjs.cloudflare.com/ajax/libs/js-polyfills/0.1.43/polyfill.min.js></script><script id=MathJax-script async src=https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js></script><script defer>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/pure/3.0.0/pure-min.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css><link rel=stylesheet href=/css/hugo-tufte.min.css><script src=/js/theme.js></script><link rel=stylesheet href=/css/hugo-tufte-override.css></head><body><div id=layout class=pure-g><article class=pure-u-1><header class=brand><a href=https://www.stephenmwangi.com/><h1>Stephen Mwangi</h1></a><h2></h2><nav class=menu><ul><li><a href=/><i class='fas fa-seedling la-lg'></i> About</a></li><li><a href=/blog><i class='fas fa-rss fa-lg'></i> Blog</a></li><li><a href=/talks><i class='fas fa-microphone-lines fa-lg'></i> Talks</a></li><li><a href=/projects><i class='fas fa-rocket fa-lg'></i> Projects</a></li><li><a href=/resume.pdf><i class='fas fa-briefcase fa-lg'></i> Resumé</a></li></ul></nav><hr></header><section><h1 class=content-title><a href=/blog/in-memory-key-value-store/>In Memory Key-Value Store</a></h1><p class=subtitle>Build Your Own Distributed Key-Value Store: Part 1</p><span class=content-meta><i class="fa fa-calendar"></i>
+&nbsp;Jan 25, 2025
+&nbsp;<i class="fa fa-clock"></i>
+&nbsp;8 min. read<br><br><i class='fa fa-tags la-lg'></i>&nbsp;&#183;
+<a href=/tags/build-your-own-x/ title=build-your-own-x>build-your-own-x</a> &#183;
+<a href=/tags/key-value-store/ title=key-value-store>key-value-store</a> &#183;
+<a href=/tags/distributed-systems/ title=distributed-systems>distributed-systems</a> &#183;
+<a href=/tags/golang/ title=golang>golang</a> &#183;</span></section><section><details closed class=toc><summary>Contents</summary><nav id=TableOfContents><ul><li><a href=#definition>Definition</a></li><li><a href=#setup>Setup</a></li><li><a href=#implementation>Implementation</a><ul><li><a href=#storage-layer>Storage Layer</a></li><li><a href=#api-layer>API Layer</a></li></ul></li><li><a href=#entry-point>Entry Point</a></li><li><a href=#project-structure>Project Structure</a></li><li><a href=#run-the-server>Run the Server</a></li><li><a href=#whats-next>What&rsquo;s Next?</a></li></ul></nav></details></section><section><div align=center class=image-container><img src=/images/illustrations/woman-gardening.png alt="Woman gardening illustration"></div><div class=epigraph><blockquote><p>What I cannot create, I do not understand. Know how to solve every problem that has been solved.</p><footer>Richard Feynman</a></footer><blockquote></div><p>In this blog series, we will build a distributed key-value store from scratch in Go. We&rsquo;ll cover topics such as replication, consensus, consistency, and sharding.
+While I&rsquo;m no expert in distributed systems, I&rsquo;m learning as I go - so if anything looks egregiously wrong (hopefully not enough to irreparably damage my self-esteem 😅), just shoot me an email or start a <a href=https://github.com/st3v3nmw/st3v3nmw.github.io/discussions>new discussion</a>.</p><h2 id=definition>Definition</h2><p>A <a href=https://en.wikipedia.org/wiki/Key%E2%80%93value_database>key-value store</a> is a database that stores key-value pairs.
+A key is a unique identifier that is used to retrieve the associated value. The value can be any data type, such as a string, an integer, or even a data blob like an image.<br>For our store, though, we&rsquo;ll only store string values for simplicity, as we&rsquo;ll be managing a database of country profiles:</p><div align=center class=image-container><img src=/images/key-value-store/key-value-example.png alt="Key-value pairs example"></div><p>Key-value stores are used in a variety of applications, including caching, session management, and configuration management. Examples of key-value stores include <a href=https://redis.io/>Redis</a>, <a href=https://valkey.io/>Valkey</a>, <a href=https://memcached.org/>Memcached</a>, and <a href=https://aws.amazon.com/dynamodb/>Amazon DynamoDB</a>.</p><h2 id=setup>Setup</h2><p>The first step is to create a new directory for the project and initialize a new Go module for our <code>crafty-key-value</code> project. Run the following commands to set it up:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> mkdir crafty-key-value
+</span></span><span class=line><span class=cl><span class=gp>$</span> <span class=nb>cd</span> crafty-key-value
+</span></span><span class=line><span class=cl><span class=gp>$</span> go mod init github.com/&lt;username&gt;/crafty-key-value
+</span></span><span class=line><span class=cl><span class=go>go: creating new go.mod: module github.com/&lt;username&gt;/crafty-key-value
+</span></span></span></code></pre></div><p>Remember to replace <code>&lt;username></code> with your GitHub username. The full source code for this post can be found in the <code>01-in-memory-key-value-store</code> folder of the <a href=https://github.com/st3v3nmw/crafty-key-value/tree/main/01-in-memory-key-value-store>companion repository</a>.</p><h2 id=implementation>Implementation</h2><p>The first version of our key-value store will be an in-memory key-value store that only runs on a single node/machine.
+We&rsquo;ll incrementally build on this foundation until we have a fully-fledged distributed key-value store and hopefully learn some distributed systems theory along the way :).</p><h3 id=storage-layer>Storage Layer</h3><p>We&rsquo;ll start off by building the storage layer of our key-value store. We&rsquo;ll store the key-value pairs in a hash table
+<label for=marginnote-df5627f75a42d77260383d1bedd44794-1 class=margin-toggle>&#8853;
+</label><input type=checkbox id=marginnote-df5627f75a42d77260383d1bedd44794-1 class=margin-toggle>
+<span class=marginnote>A hash table is a data structure that maps keys to values which closely matches the key-value store&rsquo;s data model. In Go, this is a <code>map</code>.</span>
+in memory. While this is a good starting point, we&rsquo;ll migrate to a more robust storage solution in the future.</p><p>The storage layer will implement an API with these methods:</p><ol><li><code>Set(key, value)</code>: Insert or update a <code>key</code>-<code>value</code> pair in the store.</li><li><code>Get(key)</code>: Get the value of <code>key</code> from the store.</li><li><code>Delete(key)</code>: Delete <code>key</code> from the store.</li></ol><p>Create a <code>internal/storage</code> folder and a <code>types.go</code> file inside it which will hold the types and interfaces used by the storage layer. Add the following code to it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>storage</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Storage defines the interface for a generic key-value storage system</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>Storage</span> <span class=kd>interface</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// Set adds or updates a key-value pair in the storage</span>
+</span></span><span class=line><span class=cl>	<span class=nf>Set</span><span class=p>(</span><span class=nx>key</span> <span class=kt>string</span><span class=p>,</span> <span class=nx>value</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>error</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// Get retrieves the value associated with a given key</span>
+</span></span><span class=line><span class=cl>	<span class=nf>Get</span><span class=p>(</span><span class=nx>key</span> <span class=kt>string</span><span class=p>)</span> <span class=p>(</span><span class=kt>string</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// Delete removes a key-value pair from the storage</span>
+</span></span><span class=line><span class=cl>	<span class=nf>Delete</span><span class=p>(</span><span class=nx>key</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>error</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// NotFoundError is a custom error type for when a key is not found</span>
+</span></span><span class=line><span class=cl><span class=c1>// It implements the standard error interface</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>NotFoundError</span> <span class=kd>struct</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Error returns a string representation of the error</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>e</span> <span class=o>*</span><span class=nx>NotFoundError</span><span class=p>)</span> <span class=nf>Error</span><span class=p>()</span> <span class=kt>string</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;key not found&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>Next, we&rsquo;ll implement the <code>Storage</code> interface using a <code>map</code>. Create a <code>map.go</code> file in the same folder and add the following code to it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>storage</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;sync&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// MapStorage is a simple in-memory implementation of the Storage interface</span>
+</span></span><span class=line><span class=cl><span class=c1>// It uses a map to store key-value pairs</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>MapStorage</span> <span class=kd>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>mu</span>   <span class=nx>sync</span><span class=p>.</span><span class=nx>RWMutex</span>
+</span></span><span class=line><span class=cl>	<span class=nx>data</span> <span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>string</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// NewMapStorage creates a new instance of MapStorage</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>NewMapStorage</span><span class=p>()</span> <span class=o>*</span><span class=nx>MapStorage</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=o>&amp;</span><span class=nx>MapStorage</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>data</span><span class=p>:</span> <span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>string</span><span class=p>{},</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Set adds or updates a key-value pair in the storage</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>m</span> <span class=o>*</span><span class=nx>MapStorage</span><span class=p>)</span> <span class=nf>Set</span><span class=p>(</span><span class=nx>key</span> <span class=kt>string</span><span class=p>,</span> <span class=nx>value</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>m</span><span class=p>.</span><span class=nx>mu</span><span class=p>.</span><span class=nf>Lock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>defer</span> <span class=nx>m</span><span class=p>.</span><span class=nx>mu</span><span class=p>.</span><span class=nf>Unlock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>m</span><span class=p>.</span><span class=nx>data</span><span class=p>[</span><span class=nx>key</span><span class=p>]</span> <span class=p>=</span> <span class=nx>value</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Get retrieves the value associated with a given key</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>m</span> <span class=o>*</span><span class=nx>MapStorage</span><span class=p>)</span> <span class=nf>Get</span><span class=p>(</span><span class=nx>key</span> <span class=kt>string</span><span class=p>)</span> <span class=p>(</span><span class=kt>string</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>m</span><span class=p>.</span><span class=nx>mu</span><span class=p>.</span><span class=nf>RLock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>defer</span> <span class=nx>m</span><span class=p>.</span><span class=nx>mu</span><span class=p>.</span><span class=nf>RUnlock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>value</span><span class=p>,</span> <span class=nx>ok</span> <span class=o>:=</span> <span class=nx>m</span><span class=p>.</span><span class=nx>data</span><span class=p>[</span><span class=nx>key</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>!</span><span class=nx>ok</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span> <span class=s>&#34;&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>NotFoundError</span><span class=p>{}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>value</span><span class=p>,</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Delete removes a key-value pair from the storage</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>m</span> <span class=o>*</span><span class=nx>MapStorage</span><span class=p>)</span> <span class=nf>Delete</span><span class=p>(</span><span class=nx>key</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>m</span><span class=p>.</span><span class=nx>mu</span><span class=p>.</span><span class=nf>Lock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=k>defer</span> <span class=nx>m</span><span class=p>.</span><span class=nx>mu</span><span class=p>.</span><span class=nf>Unlock</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nb>delete</span><span class=p>(</span><span class=nx>m</span><span class=p>.</span><span class=nx>data</span><span class=p>,</span> <span class=nx>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=kc>nil</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>Yup, that&rsquo;s it! We&rsquo;ve implemented a simple in-memory key-value store. The only thing to note is that we&rsquo;re using a mutex
+<label for=marginnote-df5627f75a42d77260383d1bedd44794-2 class=margin-toggle>&#8853;
+</label><input type=checkbox id=marginnote-df5627f75a42d77260383d1bedd44794-2 class=margin-toggle>
+<span class=marginnote>A mutex (from <a href=https://en.wikipedia.org/wiki/Mutual_exclusion>mutual exclusion</a>) is a synchronization primitive that prevents state from being modified or accessed by multiple threads of execution at once.</span>
+to ensure that only one goroutine can modify the <code>map</code> at a time, preventing race conditions and data corruption. This is because a <code>map</code>
+<label for=marginnote-df5627f75a42d77260383d1bedd44794-3 class=margin-toggle>&#8853;
+</label><input type=checkbox id=marginnote-df5627f75a42d77260383d1bedd44794-3 class=margin-toggle>
+<span class=marginnote>Alternatively, one can use <code>sync.Map</code> which handles concurrency out of the box.</span>
+is not thread-safe by default.</p><h3 id=api-layer>API Layer</h3><p>Next, we&rsquo;ll create a REST API that will expose the storage layer&rsquo;s API.</p><p>We&rsquo;ll add a <code>/kv/{key}</code> endpoint that will accept the following HTTP methods:</p><ol><li><code>PUT /kv/{key}</code>: Calls <code>Set</code> on the storage layer.</li><li><code>GET /kv/{key}</code>: Calls <code>Get</code> on the storage layer.</li><li><code>DELETE /kv/{key}</code>: Calls <code>Delete</code> on the storage layer.</li></ol><p>Create a <code>internal/api</code> folder and a <code>server.go</code> file inside it which will hold the API server implementation. Add the following code to it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>api</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;errors&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;io&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;net/http&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/st3v3nmw/crafty-key-value/internal/storage&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Server represents the key-value server</span>
+</span></span><span class=line><span class=cl><span class=kd>type</span> <span class=nx>Server</span> <span class=kd>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>storage</span> <span class=nx>storage</span><span class=p>.</span><span class=nx>Storage</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// New creates a new instance of the Server</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>New</span><span class=p>()</span> <span class=o>*</span><span class=nx>Server</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=o>&amp;</span><span class=nx>Server</span><span class=p>{</span><span class=nx>storage</span><span class=p>:</span> <span class=nx>storage</span><span class=p>.</span><span class=nf>NewMapStorage</span><span class=p>()}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Serve starts the HTTP server and handles key-value store operations</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>s</span> <span class=o>*</span><span class=nx>Server</span><span class=p>)</span> <span class=nf>Serve</span><span class=p>(</span><span class=nx>addr</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>error</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>http</span><span class=p>.</span><span class=nf>HandleFunc</span><span class=p>(</span><span class=s>&#34;/kv/&#34;</span><span class=p>,</span> <span class=kd>func</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>switch</span> <span class=nx>r</span><span class=p>.</span><span class=nx>Method</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=nx>http</span><span class=p>.</span><span class=nx>MethodPut</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=nx>s</span><span class=p>.</span><span class=nf>set</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=nx>http</span><span class=p>.</span><span class=nx>MethodGet</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=nx>s</span><span class=p>.</span><span class=nf>get</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>case</span> <span class=nx>http</span><span class=p>.</span><span class=nx>MethodDelete</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=nx>s</span><span class=p>.</span><span class=nb>delete</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>r</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>default</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>			<span class=nx>http</span><span class=p>.</span><span class=nf>Error</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=s>&#34;method not allowed&#34;</span><span class=p>,</span> <span class=nx>http</span><span class=p>.</span><span class=nx>StatusMethodNotAllowed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>})</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>http</span><span class=p>.</span><span class=nf>ListenAndServe</span><span class=p>(</span><span class=nx>addr</span><span class=p>,</span> <span class=kc>nil</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>This defines a new endpoint <code>/kv/{key}</code> that handles the key-value store operations. Don&rsquo;t forget to replace <code>st3v3nmw</code> in the import path with your GitHub username.</p><p>Next, we&rsquo;ll add the <code>set</code>, <code>get</code>, and <code>delete</code> methods to the <code>Server</code> struct.
+These methods are simply wrappers around the storage layer&rsquo;s API:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// set handles the HTTP PUT request for setting a key-value pair</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>s</span> <span class=o>*</span><span class=nx>Server</span><span class=p>)</span> <span class=nf>set</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>value</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>io</span><span class=p>.</span><span class=nf>ReadAll</span><span class=p>(</span><span class=nx>r</span><span class=p>.</span><span class=nx>Body</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>msg</span> <span class=o>:=</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;unable to read request body: %v&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>http</span><span class=p>.</span><span class=nf>Error</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>msg</span><span class=p>,</span> <span class=nx>http</span><span class=p>.</span><span class=nx>StatusInternalServerError</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>key</span> <span class=o>:=</span> <span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Path</span><span class=p>[</span><span class=nb>len</span><span class=p>(</span><span class=s>&#34;/kv/&#34;</span><span class=p>):]</span>
+</span></span><span class=line><span class=cl>	<span class=nx>err</span> <span class=p>=</span> <span class=nx>s</span><span class=p>.</span><span class=nx>storage</span><span class=p>.</span><span class=nf>Set</span><span class=p>(</span><span class=nx>key</span><span class=p>,</span> <span class=nb>string</span><span class=p>(</span><span class=nx>value</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>msg</span> <span class=o>:=</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;unable to set key: %v&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>http</span><span class=p>.</span><span class=nf>Error</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>msg</span><span class=p>,</span> <span class=nx>http</span><span class=p>.</span><span class=nx>StatusInternalServerError</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>w</span><span class=p>.</span><span class=nf>WriteHeader</span><span class=p>(</span><span class=nx>http</span><span class=p>.</span><span class=nx>StatusOK</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// get handles the HTTP GET request for retrieving a key-value pair</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>s</span> <span class=o>*</span><span class=nx>Server</span><span class=p>)</span> <span class=nf>get</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>key</span> <span class=o>:=</span> <span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Path</span><span class=p>[</span><span class=nb>len</span><span class=p>(</span><span class=s>&#34;/kv/&#34;</span><span class=p>):]</span>
+</span></span><span class=line><span class=cl>	<span class=nx>value</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>s</span><span class=p>.</span><span class=nx>storage</span><span class=p>.</span><span class=nf>Get</span><span class=p>(</span><span class=nx>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>if</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>Is</span><span class=p>(</span><span class=nx>err</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>storage</span><span class=p>.</span><span class=nx>NotFoundError</span><span class=p>{})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>			<span class=nx>http</span><span class=p>.</span><span class=nf>Error</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>err</span><span class=p>.</span><span class=nf>Error</span><span class=p>(),</span> <span class=nx>http</span><span class=p>.</span><span class=nx>StatusNotFound</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>			<span class=k>return</span>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>		<span class=nx>msg</span> <span class=o>:=</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;unable to get key: %v&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>http</span><span class=p>.</span><span class=nf>Error</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>msg</span><span class=p>,</span> <span class=nx>http</span><span class=p>.</span><span class=nx>StatusInternalServerError</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>w</span><span class=p>.</span><span class=nf>Write</span><span class=p>([]</span><span class=nb>byte</span><span class=p>(</span><span class=nx>value</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// delete handles the HTTP DELETE request for deleting a key-value pair</span>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>s</span> <span class=o>*</span><span class=nx>Server</span><span class=p>)</span> <span class=nb>delete</span><span class=p>(</span><span class=nx>w</span> <span class=nx>http</span><span class=p>.</span><span class=nx>ResponseWriter</span><span class=p>,</span> <span class=nx>r</span> <span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>key</span> <span class=o>:=</span> <span class=nx>r</span><span class=p>.</span><span class=nx>URL</span><span class=p>.</span><span class=nx>Path</span><span class=p>[</span><span class=nb>len</span><span class=p>(</span><span class=s>&#34;/kv/&#34;</span><span class=p>):]</span>
+</span></span><span class=line><span class=cl>	<span class=nx>err</span> <span class=o>:=</span> <span class=nx>s</span><span class=p>.</span><span class=nx>storage</span><span class=p>.</span><span class=nf>Delete</span><span class=p>(</span><span class=nx>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>msg</span> <span class=o>:=</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;unable to delete key: %v&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=nx>http</span><span class=p>.</span><span class=nf>Error</span><span class=p>(</span><span class=nx>w</span><span class=p>,</span> <span class=nx>msg</span><span class=p>,</span> <span class=nx>http</span><span class=p>.</span><span class=nx>StatusInternalServerError</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>return</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>w</span><span class=p>.</span><span class=nf>WriteHeader</span><span class=p>(</span><span class=nx>http</span><span class=p>.</span><span class=nx>StatusOK</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h2 id=entry-point>Entry Point</h2><p>Lastly, we&rsquo;ll create a <code>cmd/crafty-key-value/main.go</code> file that contains the <code>main</code> entry point
+<label for=marginnote-df5627f75a42d77260383d1bedd44794-4 class=margin-toggle>&#8853;
+</label><input type=checkbox id=marginnote-df5627f75a42d77260383d1bedd44794-4 class=margin-toggle>
+<span class=marginnote>An entry point is the place in a program where the execution of a program begins, and where the program has access to command line arguments.</span>
+for our server:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/st3v3nmw/crafty-key-value/internal/api&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Starting Crafty Key-Value Store...&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=nx>server</span> <span class=o>:=</span> <span class=nx>api</span><span class=p>.</span><span class=nf>New</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>server</span><span class=p>.</span><span class=nf>Serve</span><span class=p>(</span><span class=s>&#34;:8888&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><h2 id=project-structure>Project Structure</h2><p>After you&rsquo;re done, the project should look like this:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> tree
+</span></span><span class=line><span class=cl><span class=go>.
+</span></span></span><span class=line><span class=cl><span class=go>├── cmd
+</span></span></span><span class=line><span class=cl><span class=go>│   └── crafty-key-value
+</span></span></span><span class=line><span class=cl><span class=go>│       └── main.go
+</span></span></span><span class=line><span class=cl><span class=go>├── go.mod
+</span></span></span><span class=line><span class=cl><span class=go>└── internal
+</span></span></span><span class=line><span class=cl><span class=go>    ├── api
+</span></span></span><span class=line><span class=cl><span class=go>    │   └── server.go
+</span></span></span><span class=line><span class=cl><span class=go>    └── storage
+</span></span></span><span class=line><span class=cl><span class=go>        ├── map.go
+</span></span></span><span class=line><span class=cl><span class=go>        └── types.go
+</span></span></span><span class=line><span class=cl><span class=go></span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=go>6 directories, 5 files
+</span></span></span></code></pre></div><p>The project follows the <a href=https://github.com/golang-standards/project-layout>standard Go project layout</a>. The <code>cmd</code> folder contains the main application for the project i.e. <code>./cmd/crafty-key-value</code> while the <code>internal</code> folder contains the private application and library code.</p><p>The code is organized into packages, following a <a href=https://www.ardanlabs.com/blog/2017/02/package-oriented-design.html>package oriented design pattern</a>.
+We have a <code>storage</code> package that contains the storage layer implementation and an <code>api</code> package that contains the API layer. The <code>main</code> package ties everything together and serves as the application&rsquo;s entry point.</p><h2 id=run-the-server>Run the Server</h2><p>We&rsquo;re finally ready to run the key-value service! Run the following command to start it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> go run ./cmd/crafty-key-value
+</span></span><span class=line><span class=cl><span class=go>Starting Crafty Key-Value Store...
+</span></span></span></code></pre></div><p>We&rsquo;re going to use <code>curl</code> to test it. Let&rsquo;s start by saving some key-value pairs:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> curl -X PUT -d <span class=s1>&#39;Nairobi&#39;</span> http://127.0.0.1:8888/kv/kenya:capital
+</span></span><span class=line><span class=cl><span class=gp>$</span> curl -X PUT -d <span class=s1>&#39;Kampala&#39;</span> http://127.0.0.1:8888/kv/uganda:capital
+</span></span><span class=line><span class=cl><span class=gp>$</span> curl -X PUT -d <span class=s1>&#39;Dar es Salaam&#39;</span> http://127.0.0.1:8888/kv/tanzania:capital
+</span></span><span class=line><span class=cl><span class=gp>$</span> curl -X PUT -d <span class=s1>&#39;Dodoma&#39;</span> http://127.0.0.1:8888/kv/tanzania:capital
+</span></span></code></pre></div><p>Now, let&rsquo;s get the values we just set:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> curl http://127.0.0.1:8888/kv/kenya:capital
+</span></span><span class=line><span class=cl><span class=go>Nairobi
+</span></span></span><span class=line><span class=cl><span class=go></span><span class=gp>$</span> curl http://127.0.0.1:8888/kv/tanzania:capital
+</span></span><span class=line><span class=cl><span class=go>Dodoma
+</span></span></span></code></pre></div><p>Finally, we&rsquo;ll delete one of the key-value pairs:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> curl -X DELETE http://127.0.0.1:8888/kv/tanzania:capital
+</span></span><span class=line><span class=cl><span class=gp>$</span> curl http://127.0.0.1:8888/kv/tanzania:capital
+</span></span><span class=line><span class=cl><span class=go>key not found
+</span></span></span></code></pre></div><p>Congratulations - you&rsquo;ve just built a simple in-memory key-value store!</p><div align=center class=image-container><img src=/images/illustrations/woman-celebrating.png alt="Woman celebrating illustration"></div><h2 id=whats-next>What&rsquo;s Next?</h2><p>Since we&rsquo;re storing our data in memory, the store will lose it once we kill the process running it. In <a href=/blog/log-structured-storage/>the next post</a>, we&rsquo;ll migrate our storage layer to persistent storage using <a href=https://en.wikipedia.org/wiki/Log-structured_merge-tree>LSM trees</a> and SSTables.</p><p>As an exercise, add input validation to the <code>Server.set</code> method to ensure that the provided <code>key</code> and <code>value</code> are not empty. Use these tests to confirm that your solution works:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> curl -X PUT -d <span class=s1>&#39;&#39;</span> http://127.0.0.1:8888/kv/kenya:capital
+</span></span><span class=line><span class=cl><span class=go>value cannot be empty
+</span></span></span><span class=line><span class=cl><span class=go></span><span class=gp>$</span> curl -X PUT -d <span class=s1>&#39;foo&#39;</span> http://127.0.0.1:8888/kv/
+</span></span><span class=line><span class=cl><span class=go>key cannot be empty
+</span></span></span></code></pre></div><p>Good luck!</p></section><section><footer class=page-footer><hr><div class=previous-post style=display:inline-block><a class=link-reverse href="https://www.stephenmwangi.com/talks/?ref=footer">« Talks</a></div><div class=next-post , style=display:inline-block;float:right></div><ul class=page-footer-menu><li><a href=https://github.com/st3v3nmw><i class='fab fa-github fa-lg'></i></a></li><li><a href=https://bsky.app/profile/stephenmwangi.com><i class='fab fa-bluesky fa-lg'></i></a></li><li><a href=https://www.linkedin.com/in/stephen-k-mwangi/><i class='fab fa-linkedin fa-lg'></i></a></li><li><a href=mailto:mail@stephenmwangi.com><i class='fas fa-at fa-lg'></i></a></li><li><a href=/index.xml><i class='fas fa-rss fa-lg'></i></a></li></ul><p>Powered by <a href=https://gohugo.io>Hugo</a> and the
+<a href=https://github.com/st3v3nmw/hugo-tuftesque>Tuftesque theme</a>.</p><div class=copyright><p>&copy; 2025
+Stephen Mwangi.
+CC BY 4.0.</p></div></footer></section></article></div></body></html>
