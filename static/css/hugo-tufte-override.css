@@ -1,0 +1,14 @@
+.image-container {
+    width: 55%;
+}
+
+.image-container img {
+    width: 300px;
+    height: auto;
+}
+
+@media screen and (max-width: 760px) {
+    .image-container {
+        width: 100%;
+    }
+}
