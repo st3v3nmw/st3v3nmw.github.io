@@ -51,7 +51,7 @@ Remember to replace `<username>` with your GitHub username. The full source code
 ## Implementation
 
 The first version of our key-value store will be an in-memory key-value store that only runs on a single node/machine.
-We'll incrementally build on this foundation until we have a fully-fledged distributed key-value store and hopefully learn some distributed systems theory along the way :).
+We'll incrementally build on this foundation until we have a fully-fledged distributed key-value store and hopefully learn some distributed systems concepts along the way :).
 
 ### Storage Layer
 
