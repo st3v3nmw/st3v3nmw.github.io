@@ -37,16 +37,16 @@ Key-value stores are used in a variety of applications, including caching, sessi
 
 ## Setup
 
-The first step is to create a new directory for the project and initialize a new Go module for our `crafty-key-value` project. Run the following commands to set it up:
+The first step is to create a new directory for the project and initialize a new Go module for our `little-key-value` project. Run the following commands to set it up:
 
 ```console
-$ mkdir crafty-key-value
-$ cd crafty-key-value
-$ go mod init github.com/<username>/crafty-key-value
-go: creating new go.mod: module github.com/<username>/crafty-key-value
+$ mkdir little-key-value
+$ cd little-key-value
+$ go mod init github.com/<username>/little-key-value
+go: creating new go.mod: module github.com/<username>/little-key-value
 ```
 
-Remember to replace `<username>` with your GitHub username. The full source code for this post can be found in the `01-in-memory-key-value-store` folder of the [companion repository](https://github.com/st3v3nmw/crafty-key-value/tree/main/01-in-memory-key-value-store).
+Remember to replace `<username>` with your GitHub username. The full source code for this post can be found in the `01-in-memory-key-value-store` folder of the [companion repository](https://github.com/st3v3nmw/little-key-value/tree/main/01-in-memory-key-value-store).
 
 ## Implementation
 
@@ -169,7 +169,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/st3v3nmw/crafty-key-value/internal/storage"
+	"github.com/st3v3nmw/little-key-value/internal/storage"
 )
 
 // Server represents the key-value server
@@ -261,7 +261,7 @@ func (s *Server) delete(w http.ResponseWriter, r *http.Request) {
 
 ## Entry Point
 
-Lastly, we'll create a `cmd/crafty-key-value/main.go` file that contains the `main` entry point {{<marginnote>}}An entry point is the place in a program where the execution of a program begins, and where the program has access to command line arguments.{{</marginnote>}} for our server:
+Lastly, we'll create a `cmd/little-key-value/main.go` file that contains the `main` entry point {{<marginnote>}}An entry point is the place in a program where the execution of a program begins, and where the program has access to command line arguments.{{</marginnote>}} for our server:
 
 ```go
 package main
@@ -269,11 +269,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/st3v3nmw/crafty-key-value/internal/api"
+	"github.com/st3v3nmw/little-key-value/internal/api"
 )
 
 func main() {
-	fmt.Println("Starting Crafty Key-Value Store...")
+	fmt.Println("Starting Little Key-Value Store...")
 
 	server := api.New()
 	server.Serve(":8888")
@@ -288,7 +288,7 @@ After you're done, the project should look like this:
 $ tree
 .
 ├── cmd
-│   └── crafty-key-value
+│   └── little-key-value
 │       └── main.go
 ├── go.mod
 └── internal
@@ -301,7 +301,7 @@ $ tree
 6 directories, 5 files
 ```
 
-The project follows the [standard Go project layout](https://github.com/golang-standards/project-layout). The `cmd` folder contains the main application for the project i.e. `./cmd/crafty-key-value` while the `internal` folder contains the private application and library code.
+The project follows the [standard Go project layout](https://github.com/golang-standards/project-layout). The `cmd` folder contains the main application for the project i.e. `./cmd/little-key-value` while the `internal` folder contains the private application and library code.
 
 The code is organized into packages, following a [package oriented design pattern](https://www.ardanlabs.com/blog/2017/02/package-oriented-design.html).
 We have a `storage` package that contains the storage layer implementation and an `api` package that contains the API layer. The `main` package ties everything together and serves as the application's entry point.
@@ -311,8 +311,8 @@ We have a `storage` package that contains the storage layer implementation and a
 We're finally ready to run the key-value service! Run the following command to start it:
 
 ```console
-$ go run ./cmd/crafty-key-value
-Starting Crafty Key-Value Store...
+$ go run ./cmd/little-key-value
+Starting Little Key-Value Store...
 ```
 
 We're going to use `curl` to test it. Let's start by saving some key-value pairs:

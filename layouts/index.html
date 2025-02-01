@@ -14,7 +14,7 @@
         {{ if .IsNode }}
           <a href="{{ .Permalink }}">{{ .Title}}</a>
         {{ else }}
-          <a href="{{ .RelPermalink }}">{{ .Title }}{{ if .Draft }} :: Draft {{end}}</a>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
         {{ end }}
       </p>
     {{ end  }}
