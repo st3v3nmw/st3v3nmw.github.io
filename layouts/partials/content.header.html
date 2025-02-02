@@ -1,5 +1,5 @@
 <section>
-  <h1 class="content-title">
+  <h1 class="content-title" data-pagefind-meta="title">
     {{ if .IsNode }}
       <a href="{{ .Permalink }}">{{ replace .Title "-" " " }}</a>
     {{ else }}
@@ -14,11 +14,15 @@
 
     {{ if or (eq .Type "post") (.Params.meta) }}
       <span class="content-meta">
-        <i class="fa fa-calendar"></i>
-        &nbsp;{{ .Date.Format "Jan 2, 2006" }}
+        {{ if not .Params.hidedate }}
+          <i class="fa fa-calendar"></i>
+          &nbsp;{{ .Date.Format "Jan 2, 2006" }}
+        {{ end }}
 
-        &nbsp;<i class="fa fa-clock"></i>
-        &nbsp;{{ .ReadingTime }} min. read
+        {{ if not .Params.hidereadtime }}
+          &nbsp;<i class="fa fa-clock"></i>
+          &nbsp;{{ .ReadingTime }} min. read
+        {{ end }}
 
         {{ if .Params.tags }}
           <br><br>
@@ -34,15 +38,51 @@
     {{ end }}
 
   {{ else if (eq .Title "Blog") }}
-    <span class="content-meta">
-      &middot;&nbsp;
-      {{ range first 5 .Site.Taxonomies.tags.ByCount }}{{ $cnt := .Count }}
+    <span class="content-meta" style="line-height: 2em;">
+      <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+      <script src="/pagefind/pagefind-ui.js"></script>
+      <div id="search" style="margin-bottom: 20px;"></div>
+      <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({ element: "#search", showSubResults: true });
+        });
+      </script>
+
+      {{ range first 10 .Site.Taxonomies.tags.ByCount }}{{ $cnt := .Count }}
         {{ with $.Site.GetPage (printf "/tags/%s" .Name) }}
           <a href={{ .RelPermalink }} title="{{ .Name }}">
             <i class='fas fa-tag'></i> {{ .Name }} ({{ $cnt }})
-          </a> &nbsp;&middot;&nbsp;
+          </a>&nbsp;&nbsp;
         {{ end }}
       {{ end }}
     </span>
-  {{ end }}
+  {{ else if (eq .Title "Today I Learned") }}
+    <span class="content-meta" style="line-height: 2em;">
+      <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+      <script src="/pagefind/pagefind-ui.js"></script>
+      <div id="search" style="margin-bottom: 20px;"></div>
+      <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            new PagefindUI({ element: "#search", showSubResults: true });
+        });
+      </script>
+
+      {{ range first 25 .Site.Taxonomies.topics.ByCount }}{{ $cnt := .Count }}
+        {{ with $.Site.GetPage (printf "/topics/%s" .Name) }}
+          <a href={{ .RelPermalink }} title="{{ .Name }}">
+            <i class='fas fa-tag'></i> {{ .Name }} ({{ $cnt }})
+          </a> &nbsp;&nbsp;
+        {{ end }}
+      {{ end }}
+    </span>
+
+    {{ $pages := slice }}
+    {{ range .Site.Taxonomies.topics }}
+        {{ range .Pages }}
+            {{ $pages = $pages | append .RelPermalink }}
+        {{ end }}
+    {{ end }}
+    {{ $uniquePages := uniq $pages }}
+    <i><h3>{{ len $uniquePages }} TILs so far.</h3></i>
+{{ end }}
 </section>

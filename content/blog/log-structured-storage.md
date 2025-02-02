@@ -59,6 +59,7 @@ uganda:capital→Kampala
 ## What's Next?
 
 next post could cover log-structured storage optimizations:
+
 - compaction
 - sparse indexes
 - bloom filters

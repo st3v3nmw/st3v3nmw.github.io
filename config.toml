@@ -20,6 +20,7 @@ rssLimit = 10
 
 [taxonomies]
   tag = "tags"
+  topic = "topics"
 
 [[menu.nav]]
   name = "About"
@@ -46,9 +47,15 @@ rssLimit = 10
   identifier = "projects"
   url = "/projects"
 [[menu.nav]]
+  name = "TIL"
+  pre  = "<i class='fas fa-lightbulb fa-lg'></i> "
+  weight = 5
+  identifier = "til"
+  url = "/til"
+[[menu.nav]]
   name = "Resumé"
   pre = "<i class='fas fa-briefcase fa-lg'></i> "
-  weight = 5
+  weight = 6
   identifier = "cv"
   url = "/resume.pdf"
 

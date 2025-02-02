@@ -11,6 +11,10 @@ serve:
 post:
 	hugo new content/blog/$(filter-out $@,$(MAKECMDGOALS)).md
 
+.PHONY: til
+til:
+	hugo new --kind til content/til/$(filter-out $@,$(MAKECMDGOALS)).md
+
 .PHONY: resume
 resume:
 	pdflatex documents/resume.tex

@@ -8,10 +8,10 @@ date: 2023-01-02T19:46:08+03:00
 [This](https://github.com/st3v3nmw/obsidian-spaced-repetition) is a spaced repetition plugin for the note-taking tool [Obsidian](https://obsidian.md/).
 It allows one to create and review flashcards and entire notes. The project is written is TypeScript and its documentation can be viewed [here](/obsidian-spaced-repetition/).
 
-## Impulse
+## Beacon DNS
 
-[Impulse](https://github.com/st3v3nmw/impulse) is a distributed key-value store written in Go.
+[Beacon DNS](https://github.com/st3v3nmw/beacon-dns) is a DNS resolver with customizable & schedulable filtering for malware, trackers, ads, and other unwanted content. It's written in Go.
 
-## Elixir
+## Little Key-Value
 
-[Elixir](https://github.com/st3v3nmw/elixir-backend) is a distributed electronic health records system written in Python/Django and JavaScript/Svelte.
+[Little Key-Value](https://github.com/st3v3nmw/little-key-value) is a distributed key-value store written from scratch in Go.

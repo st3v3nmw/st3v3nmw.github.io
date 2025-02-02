@@ -14,14 +14,24 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-      - name: Setup Hugo
+      - name: Set up Hugo
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.141.0'
           extended: true
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Build
-        run: hugo --minify
+        run: |
+          npm install -g pnpm
+          pnpm install
+
+          hugo --minify
+          pnpm pagefind --site "public"
 
       - name: Copy CNAME into ./public
         run: cp CNAME ./public

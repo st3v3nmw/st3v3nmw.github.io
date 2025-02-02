@@ -9,3 +9,5 @@ resume.log
 missfont.log
 resume.out
 resume.pdf
+
+node_modules/
