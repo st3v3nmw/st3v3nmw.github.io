@@ -52,12 +52,6 @@ rssLimit = 10
   weight = 5
   identifier = "til"
   url = "/til"
-[[menu.nav]]
-  name = "Resumé"
-  pre = "<i class='fas fa-briefcase fa-lg'></i> "
-  weight = 6
-  identifier = "cv"
-  url = "/resume.pdf"
 
 [[menu.footer]]
   pre = "<i class='fas fa-at fa-lg'></i> "

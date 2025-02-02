@@ -10,8 +10,7 @@ Hi, I'm Stephen!
 I'm a Software Engineer based in Nairobi, Kenya.
 I'm currently doing backend development in Golang & Python at work,
 _casually_ writing some [TypeScript](https://github.com/st3v3nmw/obsidian-spaced-repetition),
-and learning distributed systems & machine learning.
-Before that, I received a BSc in Computer Science from the University of Nairobi.
+and learning distributed systems & machine learning. For my work history, check out my [resume](/resume.pdf).
 
 I also maintain and contribute to various open-source projects on [GitHub](https://github.com/st3v3nmw/).
 

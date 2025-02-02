@@ -2,10 +2,16 @@
 install:
 	sudo apt install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra
 	brew install hugo
+	pnpm install
 
 .PHONY: serve
 serve:
 	hugo server -D
+
+.PHONY: build
+build:
+	hugo --minify
+	pnpm pagefind --site "public"
 
 .PHONY: post
 post:
