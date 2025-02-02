@@ -7,5 +7,5 @@ meta: true
 hideDate: true
 hideReadTime: true
 topics:
-  - tag
+  - topic
 ---

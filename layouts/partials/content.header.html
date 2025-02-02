@@ -34,6 +34,16 @@
           {{ end }}
         {{ end }}
 
+        {{ if .Params.topics }}
+          <br><br>
+          <i class='fa fa-tags la-lg'></i>&nbsp;&middot;
+          {{ range $tag := .Params.topics }}
+            {{ with $.Site.GetPage (printf "/topics/%s" $tag) }}
+              <a href={{ .RelPermalink }} title="{{ $tag }}"> {{$tag}}</a> &middot;
+            {{ end }}
+          {{ end }}
+        {{ end }}
+
       </span>
     {{ end }}
 

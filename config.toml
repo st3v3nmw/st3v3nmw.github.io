@@ -5,6 +5,7 @@ theme = "hugo-tuftesque"
 math = true
 katex = true
 rssLimit = 10
+enableGitInfo = true
 
 [author]
   name = "Stephen Mwangi"
