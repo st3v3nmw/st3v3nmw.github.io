@@ -13,7 +13,7 @@ enableGitInfo = true
 [params]
   copyrightHolder = "Stephen Mwangi"
   showPoweredBy = true
-  description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya."
+  description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya"
   license = "CC BY 4.0"
   github = "st3v3nmw"
   bluesky = "stephenmwangi.com"

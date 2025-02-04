@@ -1,5 +1,6 @@
 ---
 title: "Bitmasks in Go"
+summary: "How to use bitwise operations to manipulate flags in Go"
 date: 2025-02-03T22:40:58+03:00
 type: til
 math: true

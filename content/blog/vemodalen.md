@@ -1,5 +1,6 @@
 ---
 title: "Vemödalen"
+summary: "Vemödalen is the fear that originality is no longer possible"
 date: 2023-05-16T20:39:58+03:00
 type: post
 tags:

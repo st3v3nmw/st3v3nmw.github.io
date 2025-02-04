@@ -1,4 +1,9 @@
 {{ define "main" }}
+<div itemscope itemtype="https://schema.org/WebSite">
+  <link itemprop="url" href="{{ .Site.BaseURL }}" />
+  <meta itemprop="name" content="{{ .Site.Title }}" />
+</div>
+
 <div id="layout" class="pure-g">
   <article class="pure-u-1" data-pagefind-ignore>
     {{ partial "brand.html" . }}

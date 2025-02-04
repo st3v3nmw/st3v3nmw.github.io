@@ -1,6 +1,7 @@
 ---
 title: "In Memory Key-Value Store"
 subtitle: "Build Your Own Distributed Key-Value Store: Part 1"
+summary: "In this post, we'll build an in-memory key-value store in Go as part of the Build Your Own Distributed Key-Value Store series"
 date: 2025-01-25T15:45:13+03:00
 type: post
 toc: true

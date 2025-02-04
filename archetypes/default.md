@@ -1,6 +1,7 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
 subtitle: ""
+summary: ""
 date: {{ .Date }}
 draft: true
 type: post
@@ -9,4 +10,3 @@ math: true
 tags:
   - tag
 ---
-

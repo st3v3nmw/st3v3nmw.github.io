@@ -1,6 +1,7 @@
 ---
 title: "Log-Structured Storage"
 subtitle: "Build Your Own Distributed Key-Value Store: Part 2"
+summary: "In this post, we'll add log-structured storage to a distributed key-value store I'm building from scratch"
 date: 2025-01-26T10:44:08+03:00
 draft: true
 type: post
