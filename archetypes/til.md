@@ -4,8 +4,6 @@ date: {{ .Date }}
 type: til
 math: true
 meta: true
-hideDate: true
-hideReadTime: true
 topics:
   - topic
 ---

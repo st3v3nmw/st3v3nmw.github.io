@@ -8,6 +8,7 @@ math: true
 tags:
   - build-your-own-x
   - key-value-store
+  - little-key-value
   - distributed-systems
   - golang
 ---
