@@ -9,7 +9,7 @@ toc: true
 math: true
 tags:
   - build-your-own-x
-  - key-value-store
+  - key-value-stores
   - little-key-value
   - distributed-systems
   - golang

@@ -6,7 +6,8 @@ type: til
 math: true
 meta: true
 topics:
-  - bitmask
+  - bitmasks
+  - flags
   - golang
 ---
 
