@@ -3,7 +3,8 @@
 &nbsp;Feb 3, 2025
 &nbsp;<i class="fa fa-clock"></i>
 &nbsp;2 min. read<br><br><i class='fa fa-tags la-lg'></i>&nbsp;&#183;
-<a href=/topics/bitmask/ title=bitmask>bitmask</a> &#183;
+<a href=/topics/bitmasks/ title=bitmasks>bitmasks</a> &#183;
+<a href=/topics/flags/ title=flags>flags</a> &#183;
 <a href=/topics/golang/ title=golang>golang</a> &#183;</span></section><section><p>This code demonstrates how to use bitwise operations to manipulate flags in Go.</p><h2 id=defining-flags>Defining Flags</h2><p>You can define flags this way:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>type</span> <span class=nx>Flags</span> <span class=kt>uint8</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kd>const</span> <span class=p>(</span>
@@ -45,7 +46,7 @@
 </span></span><span class=line><span class=cl>	<span class=nx>perms</span> <span class=p>=</span> <span class=nf>Toggle</span><span class=p>(</span><span class=nx>perms</span><span class=p>,</span> <span class=nx>Execute</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;has execute:&#34;</span><span class=p>,</span> <span class=nf>Has</span><span class=p>(</span><span class=nx>perms</span><span class=p>,</span> <span class=nx>Execute</span><span class=p>))</span> <span class=c1>// false</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
-</span></span></code></pre></div></section><section><footer class=page-footer><hr><div class=previous-post style=display:inline-block><a class=link-reverse href="https://www.stephenmwangi.com/blog/in-memory-key-value-store/?ref=footer">« In Memory Key-Value Store</a></div><div class=next-post , style=display:inline-block;float:right></div><ul class=page-footer-menu><li><a href=https://github.com/st3v3nmw><i class='fab fa-github fa-lg'></i></a></li><li><a href=https://bsky.app/profile/stephenmwangi.com><i class='fab fa-bluesky fa-lg'></i></a></li><li><a href=https://www.linkedin.com/in/stephen-k-mwangi/><i class='fab fa-linkedin fa-lg'></i></a></li><li><a href=mailto:mail@stephenmwangi.com><i class='fas fa-at fa-lg'></i></a></li><li><a href=/index.xml><i class='fas fa-rss fa-lg'></i></a></li></ul><p>Powered by <a href=https://gohugo.io>Hugo</a> and the
+</span></span></code></pre></div></section><section><footer class=page-footer><hr><div class=previous-post style=display:inline-block><a class=link-reverse href="https://www.stephenmwangi.com/blog/in-memory-key-value-store/?ref=footer">« In Memory Key-Value Store</a></div><div class=next-post , style=display:inline-block;float:right><a class=link-reverse href="https://www.stephenmwangi.com/til/selected-go-interfaces/?ref=footer">Selected Go Interfaces »</a></div><ul class=page-footer-menu><li><a href=https://github.com/st3v3nmw><i class='fab fa-github fa-lg'></i></a></li><li><a href=https://bsky.app/profile/stephenmwangi.com><i class='fab fa-bluesky fa-lg'></i></a></li><li><a href=https://www.linkedin.com/in/stephen-k-mwangi/><i class='fab fa-linkedin fa-lg'></i></a></li><li><a href=mailto:mail@stephenmwangi.com><i class='fas fa-at fa-lg'></i></a></li><li><a href=/index.xml><i class='fas fa-rss fa-lg'></i></a></li></ul><p>Powered by <a href=https://gohugo.io>Hugo</a> and the
 <a href=https://github.com/st3v3nmw/hugo-tuftesque>Tuftesque theme</a>.</p><div class=copyright><p>&copy; 2025
 Stephen Mwangi.
 CC BY 4.0.</p></div></footer></section></article></div></body></html>
