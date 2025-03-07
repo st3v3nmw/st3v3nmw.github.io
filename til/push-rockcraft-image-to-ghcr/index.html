@@ -1,0 +1,80 @@
+<!doctype html><html lang=en-us><head><title>Push rock to GitHub Container Registry | Stephen Mwangi</title>
+<meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=description content="How to use GitHub Actions to create a rock with Rockcraft, push the image to GitHub Container Registry, and generate its attestation"><meta property="og:site_name" content="Stephen Mwangi"><meta property="og:title" content="Push rock to GitHub Container Registry"><link rel=canonical href=https://www.stephenmwangi.com/til/push-rockcraft-image-to-ghcr/><link rel=icon type=image/x-icon href=/favicon/favicon.ico><script src=https://cdnjs.cloudflare.com/ajax/libs/js-polyfills/0.1.43/polyfill.min.js></script><script id=MathJax-script async src=https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js></script><script defer>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/pure/3.0.0/pure-min.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css><link rel=stylesheet href=/css/hugo-tufte.min.css><script src=/js/theme.js></script><link rel=stylesheet href=/css/hugo-tufte-override.css></head><body><div id=layout class=pure-g><article class=pure-u-1 data-pagefind-body><header class=brand><a href=https://www.stephenmwangi.com/><h1>Stephen Mwangi</h1></a><h2></h2><nav class=menu><ul><li><a href=/><i class='fas fa-seedling la-lg'></i> About</a></li><li><a href=/blog><i class='fas fa-rss fa-lg'></i> Blog</a></li><li><a href=/talks><i class='fas fa-microphone-lines fa-lg'></i> Talks</a></li><li><a href=/projects><i class='fas fa-rocket fa-lg'></i> Projects</a></li><li><a href=/til><i class='fas fa-lightbulb fa-lg'></i> TIL</a></li></ul></nav><hr></header><section><h1 class=content-title data-pagefind-meta=title><a href=/til/push-rockcraft-image-to-ghcr/>Push rock to GitHub Container Registry</a></h1><span class=content-meta><i class="fa fa-calendar"></i>
+&nbsp;Mar 5, 2025
+&nbsp;<i class="fa fa-clock"></i>
+&nbsp;2 min. read<br><br><i class='fa fa-tags la-lg'></i>&nbsp;&#183;
+<a href=/topics/rockcraft/ title=rockcraft>rockcraft</a> &#183;
+<a href=/topics/github-actions/ title=github-actions>github-actions</a> &#183;</span></section><section><p>Recently, I needed to push an OCI image created with <a href=https://documentation.ubuntu.com/rockcraft/en/stable/index.html>Rockcraft</a>
+<label for=marginnote-96650525c80be6e67daee9bd4ece3331-0 class=margin-toggle>&#8853;
+</label><input type=checkbox id=marginnote-96650525c80be6e67daee9bd4ece3331-0 class=margin-toggle>
+<span class=marginnote>Rockcraft is a tool used to create rocks - a new generation of secure, stable and OCI-compliant container images, based on Ubuntu.</span>
+to the GitHub Container Registry (GHCR) and generate an artifact attestation for it. I ended up having to do a bit of digging and tinkering to come up with a GitHub workflow that I liked, so I thought I would share it here in case someone else encounters the same problem.</p><p>You can use this GitHub Action to push to GHCR but it can be adapted to push to any container registry. Make sure to replace <code>&lt;username></code> with your GitHub username/organization and <code>&lt;repository></code> with the name of your repository in the last 2 steps. This workflow also assumes that you have a <code>rockcraft.yaml</code> file in the root of your repository but you can modify it to point to a different location. I&rsquo;ve added these as <code>TODOs</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Push Image to GitHub Container Registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>workflow_dispatch</span><span class=p>:</span><span class=w> </span>{}<span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>release</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>permissions</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>contents</span><span class=p>:</span><span class=w> </span><span class=l>write    </span><span class=w> </span><span class=c># required to work with repository contents</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>packages</span><span class=p>:</span><span class=w> </span><span class=l>write    </span><span class=w> </span><span class=c># required to push the image to the container registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>attestations</span><span class=p>:</span><span class=w> </span><span class=l>write</span><span class=w> </span><span class=c># required to persist the attestation</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>id-token</span><span class=p>:</span><span class=w> </span><span class=l>write    </span><span class=w> </span><span class=c># required to mint the OIDC token needed to request a Sigstore signing certificate</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Check out the repository</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># LXD is required to pack the rock</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup LXD</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>canonical/setup-lxd@main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Install Rockcraft</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          sudo snap install rockcraft --classic
+</span></span></span><span class=line><span class=cl><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          sudo snap install yq</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build rock</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          ROCKCRAFT_ENABLE_EXPERIMENTAL_EXTENSIONS=True rockcraft pack --verbose</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Log in to the container registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/login-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>registry</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>username</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.actor }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>password</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># TODO: Replace &lt;username&gt; and &lt;repository&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># TODO: Change path to rockcraft.yaml if it&#39;s not in the root of the repository</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Push image to container registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>id</span><span class=p>:</span><span class=w> </span><span class=l>push</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          NAME=$(yq .name rockcraft.yaml)
+</span></span></span><span class=line><span class=cl><span class=sd>          VERSION=$(yq .version rockcraft.yaml)
+</span></span></span><span class=line><span class=cl><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          rockcraft.skopeo --insecure-policy copy \
+</span></span></span><span class=line><span class=cl><span class=sd>            oci-archive:${NAME}_${VERSION}_amd64.rock \
+</span></span></span><span class=line><span class=cl><span class=sd>            docker://ghcr.io/&lt;username&gt;/&lt;repository&gt;:${VERSION} \
+</span></span></span><span class=line><span class=cl><span class=sd>            --dest-creds ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+</span></span></span><span class=line><span class=cl><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>          DIGEST=$(rockcraft.skopeo inspect --format &#34;{{.Digest}}&#34; docker://ghcr.io/&lt;username&gt;/&lt;repository&gt;:${VERSION})
+</span></span></span><span class=line><span class=cl><span class=sd>          echo &#34;digest=${DIGEST}&#34; &gt;&gt; $GITHUB_OUTPUT</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=c># TODO: Replace &lt;username&gt; and &lt;repository&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Generate attestation</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/attest-build-provenance@v1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>subject-name</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io/&lt;username&gt;/&lt;repository&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>subject-digest</span><span class=p>:</span><span class=w> </span><span class=l>${{ steps.push.outputs.digest }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>push-to-registry</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span></code></pre></div><p>Happy crafting! ✨</p></section><section><footer class=page-footer><hr><div class=previous-post style=display:inline-block><a class=link-reverse href="https://www.stephenmwangi.com/til/selected-go-interfaces/?ref=footer">« Selected Go Interfaces</a></div><div class=next-post , style=display:inline-block;float:right></div><ul class=page-footer-menu><li><a href=https://github.com/st3v3nmw><i class='fab fa-github fa-lg'></i></a></li><li><a href=https://bsky.app/profile/stephenmwangi.com><i class='fab fa-bluesky fa-lg'></i></a></li><li><a href=https://www.linkedin.com/in/stephen-k-mwangi/><i class='fab fa-linkedin fa-lg'></i></a></li><li><a href=mailto:mail@stephenmwangi.com><i class='fas fa-at fa-lg'></i></a></li><li><a href=/index.xml><i class='fas fa-rss fa-lg'></i></a></li></ul><p>Powered by <a href=https://gohugo.io>Hugo</a> and the
+<a href=https://github.com/st3v3nmw/hugo-tuftesque>Tuftesque theme</a>.</p><div class=copyright><p>&copy; 2025
+Stephen Mwangi.
+CC BY 4.0.</p></div></footer></section></article></div></body></html>
