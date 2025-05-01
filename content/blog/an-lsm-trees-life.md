@@ -1,8 +1,8 @@
 ---
-title: "Log-Structured Storage"
+title: "An LSM Tree's Life"
 subtitle: "Build Your Own Distributed Key-Value Store: Part 2"
-summary: "In this post, we'll add log-structured storage to a distributed key-value store I'm building from scratch"
-date: 2025-01-26T10:44:08+03:00
+summary: "In this post, we'll explore the theory behind log structure storage"
+date: 2025-04-19T15:25:50+03:00
 draft: true
 type: post
 toc: true
@@ -16,12 +16,8 @@ tags:
 ---
 
 <div align="center" class="image-container">
-  <img src="/images/illustrations/man-running.png" alt="Man running illustration"/>
+  <img src="/images/key-value-store/woman-holding-flower-pot.png" alt="Illustration of a woman holding a flower pot"/>
 </div>
-
-{{<epigraph pre="Pat Helland">}}
-Accountants don't use erasers; otherwise they may go to jail. All entries in a ledger remain in the ledger. Corrections can be made but only by making new entries in the ledger.
-{{</epigraph>}}
 
 {{<epigraph>}}
 Spes non est consilium
@@ -30,6 +26,8 @@ Spes non est consilium
 {{</epigraph>}}
 
 In the previous post, we built a simple in-memory key-value store.
+
+## Hash Indexes
 
 Go over Hash index:
 - quick lookups (O(1))
@@ -64,14 +62,14 @@ tanzania:capital→†
 uganda:capital→Kampala
 ```
 
-## What's Next?
-
-next post could cover log-structured storage optimizations:
+## Optimizations
 
 - compaction
 - sparse indexes
 - bloom filters
 - write-ahead log
+
+## What's Next?
 
 ## Resources
 
