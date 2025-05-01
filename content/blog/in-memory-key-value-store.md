@@ -15,7 +15,7 @@ tags:
 ---
 
 <div align="center" class="image-container">
-  <img src="/images/illustrations/woman-gardening.png" alt="Woman gardening illustration"/>
+  <img src="/images/key-value-store/woman-gardening.png" alt="Illustration of a woman gardening"/>
 </div>
 
 {{<epigraph pre="Richard Feynman">}}
@@ -346,12 +346,12 @@ key not found
 Congratulations - you've just built a simple in-memory key-value store!
 
 <div align="center" class="image-container">
-  <img src="/images/illustrations/woman-celebrating.png" alt="Woman celebrating illustration"/>
+  <img src="/images/key-value-store/woman-celebrating.png" alt="Illustration of a woman celebrating"/>
 </div>
 
 ## What's Next?
 
-Since we're storing our data in memory, the store will lose it once we kill the process running it. In [the next post](/blog/log-structured-storage/), we'll migrate our storage layer to persistent storage using [LSM trees](https://en.wikipedia.org/wiki/Log-structured_merge-tree) and SSTables.
+Since we're storing our data in memory, the store will lose it once we kill the process running it. In [the next post](/blog/an-lsm-trees-life/), we'll explore the theory behind [LSM trees](https://en.wikipedia.org/wiki/Log-structured_merge-tree) and SSTables as persistent storage solutions. Then, in [the following post](/blog/impl-log-structured-storage), we'll migrate our key-value store from memory to disk.
 
 As an exercise, add input validation to the `Server.set` method to ensure that the provided `key` and `value` are not empty. Use these tests to confirm that your solution works:
 

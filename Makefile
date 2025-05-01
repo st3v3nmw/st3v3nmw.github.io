@@ -6,8 +6,11 @@ install:
 
 .PHONY: serve
 serve:
-	pnpm pagefind --site "public" --silent
-	hugo server -D
+	@if [ -d "public" ] && [ "$$(ls -A public)" ]; then \
+		pnpm pagefind --site "public" --silent; \
+	fi
+
+	@hugo server -D
 
 .PHONY: post
 post:
