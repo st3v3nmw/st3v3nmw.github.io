@@ -7,23 +7,22 @@
 <div id="layout" class="pure-g">
   <article class="pure-u-1" data-pagefind-ignore>
     {{ partial "brand.html" . }}
+    {{ range where .Site.RegularPages "Type" "post"}}
 
-    {{ with .Site.GetPage "/about.md" }}
-      {{ .Content }}
-    {{ end }}
+    <h1 class="content-title">
+      {{ if .IsNode }}
+      <a href="{{ .Permalink }}">{{ .Title}}</a>
+      {{ else }}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{ end }}
+    </h1>
 
-    <h2>Latest Posts</h2>
-    {{ range first 5 (where .Site.RegularPages "Type" "post") }}
-      <p>
-        {{ .PublishDate | time.Format ":date_medium" }} &middot;
-        {{ if .IsNode }}
-          <a href="{{ .Permalink }}">{{ .Title}}</a>
-        {{ else }}
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-        {{ end }}
-      </p>
+    <p>{{ truncate 120  .Summary }}</p>
+    {{/*  {{ if .Truncated }}  */}}
+    <p><a href="{{ .RelPermalink  }}">Read On &rarr;</a></p>
+    {{/*  {{ end }}  */}}
+
     {{ end  }}
-
     {{ partial "footer.html" . }}
   </article>
 </div>

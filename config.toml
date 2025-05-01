@@ -1,7 +1,6 @@
 baseURL = "https://www.stephenmwangi.com/"
 languageCode = "en-us"
 title = "Stephen Mwangi"
-theme = "hugo-tuftesque"
 math = true
 katex = true
 rssLimit = 10
@@ -12,7 +11,6 @@ enableGitInfo = true
 
 [params]
   copyrightHolder = "Stephen Mwangi"
-  showPoweredBy = true
   description = "Stephen Mwangi is a software engineer and computer scientist based in Nairobi, Kenya"
   license = "CC BY 4.0"
   github = "st3v3nmw"
@@ -25,7 +23,7 @@ enableGitInfo = true
 
 [[menu.nav]]
   name = "About"
-  pre = "<i class='fas fa-seedling la-lg'></i> "
+  pre = "<i class='fas fa-feather fa-lg'></i> "
   weight = 1
   identifier = "about"
   url = "/"
