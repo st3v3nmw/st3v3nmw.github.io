@@ -6,16 +6,12 @@ install:
 
 .PHONY: serve
 serve:
+	pnpm pagefind --site "public" --silent
 	hugo server -D
-
-.PHONY: build
-build:
-	hugo --minify
-	pnpm pagefind --site "public"
 
 .PHONY: post
 post:
-	hugo new content/blog/$(filter-out $@,$(MAKECMDGOALS)).md
+	hugo new --kind post content/blog/$(filter-out $@,$(MAKECMDGOALS)).md
 
 .PHONY: til
 til:

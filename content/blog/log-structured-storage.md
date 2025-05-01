@@ -23,6 +23,12 @@ tags:
 Accountants don't use erasers; otherwise they may go to jail. All entries in a ledger remain in the ledger. Corrections can be made but only by making new entries in the ledger.
 {{</epigraph>}}
 
+{{<epigraph>}}
+Spes non est consilium
+
+(Hope is not a strategy)
+{{</epigraph>}}
+
 In the previous post, we built a simple in-memory key-value store.
 
 Go over Hash index:

@@ -1,0 +1,96 @@
+<footer class="page-footer">
+	<hr/>
+
+  <div class="previous-post" style="display:inline-block;">
+    {{ if .Page.Prev }}
+      <a class="link-reverse" href="{{ .Page.Prev.Permalink }}?ref=footer">
+          « {{ .Page.Prev.Title | truncate 50 "..."}}
+      </a>
+    {{ end }}
+  </div>
+
+  <div class="next-post", style="float:right;">
+    {{ if .Page.Next }}
+      <a class="link-reverse" href="{{ .Page.Next.Permalink }}?ref=footer">
+          {{ .Page.Next.Title | truncate 50 "..." }} »
+      </a>
+    {{ end }}
+  </div>
+
+  <ul class="page-footer-menu">
+    {{/* SOCIALS */}}
+    {{ if isset .Site.Params "github" }}
+      <li><a href="https://github.com/{{.Site.Params.github}}"><i class='fab fa-github fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "gitlab" }}
+      <li><a href="https://gitlab.com/{{.Site.Params.gitlab}}"><i class='fab fa-gitlab fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "bluesky" }}
+      <li><a href="https://bsky.app/profile/{{.Site.Params.bluesky}}"><i class='fab fa-bluesky fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "twitter" }}
+      <li><a href="https://x.com/{{.Site.Params.twitter}}"><i class='fab fa-twitter fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "medium" }}
+      <li><a href="https://medium.com/{{.Site.Params.medium}}"><i class='fab fa-medium fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "youtube" }}
+      <li><a href="https://www.youtube.com/{{.Site.Params.youtube}}"><i class='fab fa-youtube fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "patreon" }}
+      <li><a href="https://www.patreon.com/{{.Site.Params.patreon}}"><i class='fab fa-patreon fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "stackoverflow" }}
+      <li><a href="https://stackoverflow.com/users/{{.Site.Params.stackoverflow}}?tab=profile"><i class='fab fa-stack-overflow fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "reddit" }}
+      <li><a href="https://www.reddit.com/user/{{.Site.Params.reddit}}"><i class='fab fa-reddit fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "linkedin" }}
+      <li><a href="https://www.linkedin.com/in/{{.Site.Params.linkedin}}/"><i class='fab fa-linkedin fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "instagram" }}
+      <li><a href="https://www.instagram.com/{{.Site.Params.instagram}}"><i class='fab fa-instagram fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "mastodon" }}
+      <li><a href="https://{{.Site.Params.mastodon}}"><i class='fab fa-mastodon fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "orcid" }}
+      <li><a href="https://orcid.org/{{.Site.Params.orcid}}"><i class='fab fa-orcid fa-lg'></i></a></li>
+    {{ end }}
+
+    {{ if isset .Site.Params "google_scholar" }}
+    <li><a href="https://scholar.google.com/citations?user={{.Site.Params.google_scholar}}"><i class='fab fa-google-scholar fa-lg'></i></a></li>
+    {{ end }}
+    {{/* END SOCIALS */}}
+
+    {{ range .Site.Menus.footer }}
+      <li><a href="{{.URL}}">{{.Pre }} {{ .Name }}</a></li>
+    {{ end }}
+  </ul>
+
+	<div class="copyright">
+    <p>
+      &copy; {{ now.Format "2006" }}
+      {{ with .Site.Params.copyrightHolder }}{{ . }}{{end}}.
+      {{ if isset .Site.Params "license" }}
+          {{ with .Site.Params.license }}{{ . }}{{end}}.
+      {{ else }}
+          All rights reserved.
+      {{end}}
+    </p>
+  </div>
+
+</footer>
