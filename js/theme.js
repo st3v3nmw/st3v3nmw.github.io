@@ -1,13 +1,13 @@
 if (window.innerWidth > 768) {
-    document.addEventListener('DOMContentLoaded', () => {
-        const codeBlocks = document.querySelectorAll('pre > code');
+    document.addEventListener("DOMContentLoaded", () => {
+        const codeBlocks = document.querySelectorAll("pre > code");
 
         codeBlocks.forEach(codeBlock => {
-            const copyButton = document.createElement('button');
+            const copyButton = document.createElement("button");
             copyButton.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
-            copyButton.classList.add('copy-btn');
+            copyButton.classList.add("copy-btn");
 
-            copyButton.addEventListener('click', () => {
+            copyButton.addEventListener("click", () => {
                 const code = codeBlock.textContent;
                 navigator.clipboard.writeText(code).then(() => {
                     copyButton.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
@@ -17,7 +17,7 @@ if (window.innerWidth > 768) {
                 });
             });
 
-            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.style.position = "relative";
             codeBlock.parentNode.appendChild(copyButton);
         });
     });

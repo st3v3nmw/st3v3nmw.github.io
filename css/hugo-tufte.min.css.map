@@ -3,17 +3,17 @@
 	"file": "hugo-tufte.min.css",
 	"sourceRoot": "/home/runner/work/st3v3nmw.github.io/st3v3nmw.github.io",
 	"sources": [
-		"themes/hugo-tuftesque/assets/scss/hugo-tufte.scss",
-		"themes/hugo-tuftesque/assets/scss/vendor/tufte.scss",
-		"themes/hugo-tuftesque/assets/scss/general.scss",
-		"themes/hugo-tuftesque/assets/scss/pages/footer.scss",
-		"themes/hugo-tuftesque/assets/scss/components/code-highlight.scss",
-		"themes/hugo-tuftesque/assets/scss/components/toc.scss",
-		"themes/hugo-tuftesque/assets/scss/components/nav.scss",
-		"themes/hugo-tuftesque/assets/scss/components/header.scss",
-		"themes/hugo-tuftesque/assets/scss/components/meta.scss",
-		"themes/hugo-tuftesque/assets/scss/syntax/highlight-light.scss",
-		"themes/hugo-tuftesque/assets/scss/syntax/syntax-light.scss"
+		"assets/scss/hugo-tufte.scss",
+		"assets/scss/vendor/tufte.scss",
+		"assets/scss/general.scss",
+		"assets/scss/pages/footer.scss",
+		"assets/scss/components/code-highlight.scss",
+		"assets/scss/components/toc.scss",
+		"assets/scss/components/nav.scss",
+		"assets/scss/components/header.scss",
+		"assets/scss/components/meta.scss",
+		"assets/scss/syntax/highlight-light.scss",
+		"assets/scss/syntax/syntax-light.scss"
 	],
 	"sourcesContent": [
 		"// VENDOR\n@import \"vendor/tufte.scss\";\n\n// OUR CODE\n@import \"general\";\n\n/// PAGES\n@import \"pages/footer\";\n\n/// COMPONENTS\n@import \"components/code-highlight\";\n@import \"components/toc\";\n@import \"components/nav\";\n@import \"components/header\";\n@import \"components/meta\";\n\n// Look at this https://gohugo.io/hugo-pipes/resource-from-template/#readout\n@import \"syntax/highlight-light.scss\";\n",
