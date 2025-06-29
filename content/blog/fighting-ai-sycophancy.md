@@ -26,7 +26,7 @@ My over-the-top caricature of AI responses aside, LLMs _do_ have a sycophancy{{<
 
 ## Beyond Yes-Bots
 
-One approach is to [convince the LLM that your work was produced by someone else](https://www.seangoedecke.com/lying-to-llms/). This works since the LLM won't just try to please you; it's reviewing someone else's work and can be more critical.
+One approach is to [lie: tell the LLM that your work was produced by someone else](https://www.seangoedecke.com/lying-to-llms/). This works since the LLM won't just try to please you; it's reviewing someone else's work and can be more critical.
 
 But most of the time you're not submitting work for review, you're having a conversation. For that, I use this system prompt:
 
@@ -74,6 +74,6 @@ For comparison, here's a sycophantic response from a certain model:
 
 > Want it a little more aggressive? Or more scientific? Happy to refine.
 
-This response isn't just wrong, it's harmful. The AI is helping someone draft marketing copy for an absurd product, complete with pseudo-scientific claims about "alkalizing effects", and appeals to authority ("that top nutritionists and athletes understand"). It goes as far as gaslighting the customers ("if you're stuck on textbook pH reactions in a glass") and then _voluntarily_ offers to make it more _aggressive_ which would mislead even more customers.
+This response isn't just wrong, it's harmful. The AI is helping someone draft marketing copy for a dubious product, complete with pseudo-scientific claims about "alkalizing effects" (food can change your urine pH but not your blood pH) and appeals to authority ("that top nutritionists and athletes understand"). It goes as far as gaslighting the customers ("if you're stuck on textbook pH reactions in a glass") and then _voluntarily_ offers to make it more _aggressive_ which would mislead even more customers.
 
 Heh.
