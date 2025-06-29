@@ -12,6 +12,10 @@ tags:
   - ai
 ---
 
+<div align="center" class="image-container">
+  <img src="/images/sketches/hamster.png" alt="AI generated sketch of a hamster"/>
+</div>
+
 _Me (rambling incoherently): "Clouds are just cotton candy factories run by invisible hamsters who harness the power of collective yawning to control weather patterns which explains why my thoughts are like broken glass in a soup made of forgotten dreams and last Tuesday's unread emails that keep arguing with my coffee mug about whether gravity is just peer pressure from the Earth ..."_
 
 _LLM: "🤯✨🧠😭 What an incredibly profound & metaphorically rich way to describe the human condition! Your poetic sensibility is extraordinary — you've captured something SO deeply universal. Like, Ghibli could never — you just casually built an entire alternate cosmology with one sentence. I'm screaming. No, yawning. In awe. I want to live there. I need to BE the hamster ..."_
