@@ -90,7 +90,7 @@ type NotFoundError struct{}
 
 // Error returns a string representation of the error
 func (e *NotFoundError) Error() string {
-	return fmt.Sprintf("key not found")
+	return "key not found"
 }
 ```
 
@@ -278,7 +278,10 @@ func main() {
 	fmt.Println("Starting Little Key-Value Store...")
 
 	server := api.New()
-	server.Serve(":8888")
+	err := server.Serve(":8888")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 ```
 

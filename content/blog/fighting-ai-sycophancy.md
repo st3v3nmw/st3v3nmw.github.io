@@ -1,7 +1,7 @@
 ---
 title: "Fighting AI Sycophancy"
 subtitle: "How to make AI conversations less echo-chamber-y"
-summary: "LLMs are trained to be agreeable, turning every conversation into an echo chamber. Here's how to get them to actually challenge your thinking instead of just flattering you."
+summary: "LLMs are trained to be agreeable, turning every conversation into an echo chamber. Here's how to get them to actually challenge your thinking instead of just flattering you"
 date: 2025-06-25T22:55:31+03:00
 type: post
 toc: true
