@@ -40,7 +40,7 @@ in memory. While this is a good starting point, we&rsquo;ll migrate to a more ro
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1>// Error returns a string representation of the error</span>
 </span></span><span class=line><span class=cl><span class=kd>func</span> <span class=p>(</span><span class=nx>e</span> <span class=o>*</span><span class=nx>NotFoundError</span><span class=p>)</span> <span class=nf>Error</span><span class=p>()</span> <span class=kt>string</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;key not found&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=s>&#34;key not found&#34;</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></div><p>Next, we&rsquo;ll implement the <code>Storage</code> interface using a <code>map</code>. Create a <code>map.go</code> file in the same folder and add the following code to it:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>storage</span>
 </span></span><span class=line><span class=cl>
@@ -204,7 +204,10 @@ for our server:</p><div class=highlight><pre tabindex=0 class=chroma><code class
 </span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Starting Little Key-Value Store...&#34;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>	<span class=nx>server</span> <span class=o>:=</span> <span class=nx>api</span><span class=p>.</span><span class=nf>New</span><span class=p>()</span>
-</span></span><span class=line><span class=cl>	<span class=nx>server</span><span class=p>.</span><span class=nf>Serve</span><span class=p>(</span><span class=s>&#34;:8888&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=nx>err</span> <span class=o>:=</span> <span class=nx>server</span><span class=p>.</span><span class=nf>Serve</span><span class=p>(</span><span class=s>&#34;:8888&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
 </span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></div><h2 id=project-structure>Project Structure</h2><p>After you&rsquo;re done, the project should look like this:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-console data-lang=console><span class=line><span class=cl><span class=gp>$</span> tree
 </span></span><span class=line><span class=cl><span class=go>.
