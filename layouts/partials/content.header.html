@@ -15,12 +15,12 @@
     {{ if or (eq .Type "post") (.Params.meta) }}
       <span class="content-meta">
         {{ if not .Params.hidedate }}
-          <i class="fa fa-calendar"></i>
+          <i class="fa fa-feather"></i>
           &nbsp;{{ .Date.Format "Jan 2, 2006" }}
         {{ end }}
 
         {{ if not .Params.hidereadtime }}
-          &nbsp;<i class="fa fa-clock"></i>
+          &nbsp;<i class="fa fa-hourglass-half"></i>
           &nbsp;{{ .ReadingTime }} min. read
         {{ end }}
 

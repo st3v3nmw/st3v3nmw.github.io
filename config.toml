@@ -23,14 +23,14 @@ enableRobotsTXT = true
   topic = "topics"
 
 [[menu.nav]]
-  name = "About"
-  pre = "<i class='fas fa-feather fa-lg'></i> "
+  name = "Home"
+  pre = "<i class='fas fa-house fa-lg'></i> "
   weight = 1
-  identifier = "about"
+  identifier = "home"
   url = "/"
 [[menu.nav]]
   name = "Blog"
-  pre = "<i class='fas fa-rss fa-lg'></i> "
+  pre = "<i class='fas fa-feather fa-lg'></i> "
   weight = 2
   identifier = "blog"
   url = "/blog"
