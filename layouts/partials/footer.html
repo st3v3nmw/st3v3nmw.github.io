@@ -1,21 +1,6 @@
 <footer class="page-footer">
 	<hr/>
-
-  <div class="previous-post" style="display:inline-block;">
-    {{ if .Page.Prev }}
-      <a class="link-reverse" href="{{ .Page.Prev.Permalink }}?ref=footer">
-          « {{ .Page.Prev.Title | truncate 50 "..."}}
-      </a>
-    {{ end }}
-  </div>
-
-  <div class="next-post", style="float:right;">
-    {{ if .Page.Next }}
-      <a class="link-reverse" href="{{ .Page.Next.Permalink }}?ref=footer">
-          {{ .Page.Next.Title | truncate 50 "..." }} »
-      </a>
-    {{ end }}
-  </div>
+	<br/>
 
   <ul class="page-footer-menu">
     {{/* SOCIALS */}}
