@@ -22,6 +22,10 @@ tags:
 What I cannot create, I do not understand. Know how to solve every problem that has been solved.
 {{</epigraph>}}
 
+{{<blockquote>}}
+**Update**: I decided to continue this work at [lsfr.io](https://lsfr.io/) instead. Please check it out!
+{{</blockquote>}}
+
 In this blog series, we will build a distributed key-value store from scratch in Go. We'll cover topics such as replication, consensus, consistency, and sharding.
 While I'm no expert in distributed systems, I'm learning as I go - so if anything looks egregiously wrong (hopefully not enough to irreparably damage my self-esteem 😅), just shoot me an email or start a [new discussion](https://github.com/st3v3nmw/st3v3nmw.github.io/discussions).
 
@@ -48,7 +52,7 @@ $ go mod init github.com/<username>/little-key-value
 go: creating new go.mod: module github.com/<username>/little-key-value
 ```
 
-Remember to replace `<username>` with your GitHub username. The full source code for this post can be found in the `01-in-memory-key-value-store` folder of the [companion repository](https://github.com/st3v3nmw/little-key-value/tree/main/01-in-memory-key-value-store).
+Remember to replace `<username>` with your GitHub username. The full source code for this post can be found in the [companion repository](https://github.com/st3v3nmw/little-key-value).
 
 ## Implementation
 
@@ -354,7 +358,7 @@ Congratulations - you've just built a simple in-memory key-value store!
 
 ## What's Next?
 
-Since we're storing our data in memory, the store will lose it once we kill the process running it. In [the next post](/blog/an-lsm-trees-life/), we'll explore the theory behind [LSM trees](https://en.wikipedia.org/wiki/Log-structured_merge-tree) and SSTables as persistent storage solutions. Then, in [the following post](/blog/impl-log-structured-storage), we'll migrate our key-value store from memory to disk.
+Since we're storing our data in memory, the store will lose it once we kill the process running it. In the next post, we'll explore the theory behind [LSM trees](https://en.wikipedia.org/wiki/Log-structured_merge-tree) and SSTables as persistent storage solutions. Then, in the following post, we'll migrate our key-value store from memory to disk.
 
 As an exercise, add input validation to the `Server.set` method to ensure that the provided `key` and `value` are not empty. Use these tests to confirm that your solution works:
 
