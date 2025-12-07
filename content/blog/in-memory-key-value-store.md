@@ -26,7 +26,7 @@ What I cannot create, I do not understand. Know how to solve every problem that 
 **Update**: I decided to continue this work at [lsfr.io](https://lsfr.io/) instead. Please check it out!
 {{</blockquote>}}
 
-In this blog series, we will build a distributed key-value store from scratch in Go. We'll cover topics such as replication, consensus, consistency, and sharding.
+{{<dropcap>}}I{{</dropcap>}}n this blog series, we will build a distributed key-value store from scratch in Go. We'll cover topics such as replication, consensus, consistency, and sharding.
 While I'm no expert in distributed systems, I'm learning as I go - so if anything looks egregiously wrong (hopefully not enough to irreparably damage my self-esteem 😅), just shoot me an email or start a [new discussion](https://github.com/st3v3nmw/st3v3nmw.github.io/discussions).
 
 ## Definition
