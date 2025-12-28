@@ -10,7 +10,7 @@ serve:
 		pnpm pagefind --site "public" --silent; \
 	fi
 
-	@hugo server -D
+	hugo server -D
 
 .PHONY: post
 post:
@@ -26,5 +26,6 @@ resume:
 	mv resume.pdf static/
 	rm resume.aux resume.log resume.out
 
-%:
-	@:
+.PHONY: clean
+clean:
+	rm -rf public
