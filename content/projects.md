@@ -6,7 +6,7 @@ date: 2023-01-02T19:46:08+03:00
 ## Obsidian Spaced Repetition
 
 [This](https://github.com/st3v3nmw/obsidian-spaced-repetition) is a spaced repetition plugin for the note-taking tool [Obsidian](https://obsidian.md/).
-It allows one to create and review flashcards and entire notes. The project is written is TypeScript and its documentation can be viewed [here](https://www.stephenmwangi.com/obsidian-spaced-repetition/).
+It allows one to create and review flashcards and entire notes. The project is written is TypeScript and its documentation can be viewed [here](https://stephenmwangi.com/obsidian-spaced-repetition/).
 
 It has been downloaded over 400,000 times and translated into 15+ languages by a global community of users.
 

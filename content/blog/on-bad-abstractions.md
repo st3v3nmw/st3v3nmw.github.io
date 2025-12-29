@@ -74,7 +74,7 @@ GROUP BY u.id, p.id
 ORDER BY u.first_name;
 ```
 
-The performance impact can be devastating, and [it's often not obvious](https://www.stephenmwangi.com/slides/django-perf-and-you/). These queries end up buried in templates or view logic where they're hard to spot until production.
+The performance impact can be devastating, and [it's often not obvious](https://stephenmwangi.com/slides/django-perf-and-you/). These queries end up buried in templates or view logic where they're hard to spot until production.
 
 "Ah," you say, "but I can fix this with [select_related](https://docs.djangoproject.com/en/6.0/ref/models/querysets/#select-related) and [prefetch_related](https://docs.djangoproject.com/en/6.0/ref/models/querysets/#prefetch-related)!" Sure. Except now you need to know:
 
