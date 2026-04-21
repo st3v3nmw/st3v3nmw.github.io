@@ -1,6 +1,9 @@
 .PHONY: install
 install:
-	sudo apt install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra
+	brew install --cask basictex
+	sudo tlmgr update --self
+	sudo tlmgr install fontawesome5 titlesec titling
+
 	brew install hugo
 	pnpm install
 

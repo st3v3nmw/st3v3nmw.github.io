@@ -43,7 +43,7 @@
     \ifthenelse{\equal{#3}{}}{}{
         {\textbf{\textit{#3}}} \hfill {\textit{#4}} \\
     }
-    \vspace{0.5em}
+    \vspace{0.425em} % was 0.5em
 }
 
 % Title
@@ -59,18 +59,19 @@
     \faIcon{map-marker} Nairobi, Kenya
 \end{center}
 
-% Work Experience
+% Experience
 
-\section{Work Experience}
+\section{Experience}
 \experience
     {Canonical}
     {January 2024 - Present}
     {Software Engineer}
     {Remote}
     \begin{itemize}\vspace{-1em}
-        \item Designing and developing remote management capabilities for Ubuntu devices
-            \textit{(Golang, Python, Juju)}
-        \item Contributed to the Landscape client snap which enabled the management of Ubuntu Core devices
+        \item Designed and implemented a bespoke message queue service for remote device management, enabling reliable async communication between the cloud and remote IoT/edge devices at scale \textit{(Golang, Kubernetes)}
+        \item Implemented client-side device management features in snapd (Ubuntu's package manager daemon), enabling remote configuration and control of IoT devices running snapd \textit{(Golang)}
+        \item Authored technical specifications for the remote device management system, covering the messaging protocol, authorization model, message queue architecture, and APIs
+        \item Built out the Landscape client snap from the ground up, shipping user management, configuration management, service management, and zero-touch provisioning which enabled management of Ubuntu Core devices \textit{(Python)}
     \end{itemize}
 \experience
     {Savannah Informatics}
@@ -79,13 +80,11 @@
     {Nairobi, Kenya}
     \begin{itemize}\vspace{-1em}
         \item Led the design and development of the backend of an Electronic Medical Records and Patient Engagement system
-            \textit{(Python, Django, Golang, Kubernetes, Google Cloud Platform, RabbitMQ)}
-        \item Implemented and designed the company's SMS and USSD API gateway and integrated it with a major Kenyan telecommunications provider, reducing comms costs by $\approx$40\%
-        \item Participated in re-platforming existing backend infrastructure from Google Cloud Run to use Google Kubernetes Engine which reduced the company's infrastructure cost by $\approx$55\%
-        \item Implemented an event-driven usage-based billing module that integrated with prepaid wallets on an internal ERP system
-        \item Optimized existing APIs through application-level caching and query optimization which reduced p95 latency by $\approx$80\% \href{https://stephenmwangi.com/talks/django-perf-and-you/}{\textcolor{tuftsblue}{\underline{(Talk given on Django performance)}}}
-        \item Setup observability to collect metrics and logs using Telegraf, InfluxDB, Grafana, and Sentry for monitoring and error-reporting
-        \item Guided and coached new hires and interns
+            \textit{(Python, Django, Golang, PostgreSQL, Kubernetes, Google Cloud Platform, RabbitMQ)}
+        \item Implemented and designed the company's SMS and USSD API gateway and integrated it with a major Kenyan telecommunications provider, reducing communication costs by $\approx$40\%
+        \item Migrated my team's backend infrastructure from Google Cloud Run to Google Kubernetes Engine, reducing infrastructure costs by $\approx$55\%
+        \item Implemented an event-driven usage-based billing module that integrated with prepaid wallets on an internal ERP
+        \item Optimized existing APIs through application-level caching and query optimization which reduced p95 latency by $\approx$80\% \href{https://stephenmwangi.com/slides/django-perf-and-you}{\textcolor{tuftsblue}{\underline{(Talk given on Django performance)}}}
     \end{itemize}
 \experience
     {Savannah Informatics}
@@ -95,7 +94,6 @@
     \begin{itemize}\vspace{-1em}
         \item Maintained and developed the Slade360 Electronic Data Interchange system
             \textit{(Python, Django)}
-        \item Wrote unit, integration, and end-to-end tests
     \end{itemize}
 
 % Education
@@ -106,44 +104,44 @@
     {September 2018 - September 2022}
     {BSc. Computer Science}
     {First Class Honours}
-    \textbf{Relevant coursework:} Software Engineering, Distributed Systems, Data Structures and Algorithms,
-    Design Thinking, Systems Analysis and Design, Artificial Intelligence, Machine Learning, Compiler Construction
 
 % Projects
 
-\section{Open Source Projects}
+\section{Projects}
 \experience
-    {Obsidian Spaced Repetition \href{https://github.com/st3v3nmw/obsidian-spaced-repetition}{\textcolor{tuftsblue}{\underline{(link)}}}}
+    {\href{https://github.com/st3v3nmw/obsidian-spaced-repetition}{\textcolor{tuftsblue}{\underline{Obsidian Spaced Repetition}}}}
     {April 2021 - Present}{}{}
-    Spaced Repetition plugin written in TypeScript for the note-taking tool {\href{https://obsidian.md/}{\textcolor{tuftsblue}{\underline{Obsidian}}}}.
-    It has been downloaded over 350,000 times and translated into 10+ languages by a global
-    community of users.
+    Flashcards and spaced repetition plugin written in TypeScript for the note-taking tool {\href{https://obsidian.md/}{\textcolor{tuftsblue}{\underline{Obsidian}}}}.
+    500,000\texttt{+} downloads, translated into 15\texttt{+} languages by a global community of users.
     \vspace{0.75em}
     \newline
 \experience
-    {Little Key-Value \href{https://github.com/st3v3nmw/little-key-value}{\textcolor{tuftsblue}{\underline{(link)}}}}
-    {January 2025 - Present}{}{}
-    Little Key-Value is a distributed key-value store written from scratch in Go as part of a build-your-own-x blog series.
+    {\href{https://clstr.io/}{\textcolor{tuftsblue}{\underline{clstr.io}}}}
+    {December 2025 - Present}{}{}
+    An open-source platform for learning distributed systems by building them from scratch,
+    with guided challenges where users validate their implementations against a test harness
+    that orchestrates clusters and simulates network conditions.
     \vspace{0.75em}
     \newline
 \experience
-    {Beacon DNS \href{https://github.com/st3v3nmw/beacon-dns}{\textcolor{tuftsblue}{\underline{(link)}}}}
-    {August 2024 - April 2025}{}{}
-    Beacon DNS is a DNS resolver with customizable filtering for malware, trackers, ads, and other unwanted content.
+    {\href{https://github.com/st3v3nmw/sourcerer-mcp/}{\textcolor{tuftsblue}{\underline{Sourcerer MCP}}}}
+    {August 2025 - Present}{}{}
+    An MCP server for semantic code search using Tree-sitter and vector embeddings,
+    letting AI agents jump directly to relevant code chunks instead of reading entire files, reducing token waste.
 
 % Skills
 
 \section{Skills}
 
-\textbf{Programming:}~ Python (Django), Golang, SQL, TypeScript, JavaScript, HTML/CSS
+\textbf{Languages:}~~~~~~ Golang, Python (Django), SQL, TypeScript, JavaScript
 \vspace{0.5em}
 
-\textbf{Infrastructure:} Kubernetes, Google Cloud Platform, Docker, Juju, PostgreSQL, Redis, RabbitMQ
+\textbf{Infrastructure:} Kubernetes, Google Cloud Platform, Docker, PostgreSQL, Redis, RabbitMQ
 \vspace{0.5em}
 
-\textbf{Observability:}~ Grafana, Telegraf, InfluxDB, Sentry
+\textbf{Observability:}~ Grafana, Sentry, Loki, Tempo
 \vspace{0.5em}
 
-\textbf{CI/CD:}~~~~~~~~~~ GitHub Workflows, Gitlab CI/CD, Helm, Ansible
+\textbf{CI/CD:}~~~~~~~~~~~ GitHub Actions, GitLab CI, Helm, Ansible
 
 \end{document}
