@@ -23,7 +23,7 @@ What I cannot create, I do not understand. Know how to solve every problem that 
 {{</epigraph>}}
 
 {{<blockquote>}}
-**Update**: I decided to continue this work at [lsfr.io](https://lsfr.io/kv-store/) instead. Please check it out!
+**Update**: I decided to continue this work at [clstr.io](https://clstr.io/kv-store/) instead. Please check it out!
 {{</blockquote>}}
 
 {{<dropcap>}}I{{</dropcap>}}n this blog series, we will build a distributed key-value store from scratch in Go. We'll cover topics such as replication, consensus, consistency, and sharding.
